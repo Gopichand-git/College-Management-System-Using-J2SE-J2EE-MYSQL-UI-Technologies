@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>College Departments</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <style>
+    .department-header {
+      background-color: #333;
+      color: rgb(197, 255, 8);
+      padding: 30px 0;
+      text-align: center;
+      font-size: 40px;
+    }
+
+    .department-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .department-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .department-icon {
+      font-size: 40px;
+      color: #f05a28;
+      margin-right: 15px;
+    }
+
+    .department-title {
+      color: #005a8d;
+    }
+
+    .department-link {
+      text-decoration: none;
+      font-size: 14px;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .department-link:hover {
+      border-color: #f05a28;
+      color: #f05a28;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="department-header">Departments</div>
+
+  <div class="container py-5">
+    <div class="row g-4">
+
+      <!-- CSE -->
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-desktop department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">CSE</h5>
+            <p class="mb-1 fw-bold">(Since 1991)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#cseModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-brain department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">AIDS</h5>
+            <p class="mb-1 fw-bold">(Since 2020)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#aidsModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+  
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-robot department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">AIML</h5>
+            <p class="mb-1 fw-bold">(Since 2021)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#aimlModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-laptop-code department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">IT</h5>
+            <p class="mb-1 fw-bold">(Since 1999)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#itModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-wifi department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">ECE</h5>
+            <p class="mb-1 fw-bold">(Since 1980)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#eceModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-plug department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">EEE</h5>
+            <p class="mb-1 fw-bold">(Since 1994)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#eeeModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+ 
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-cogs department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">MEC</h5>
+            <p class="mb-1 fw-bold">(Since 1980)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#mecModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CIVIL -->
+      <div class="col-md-6 col-lg-4">
+        <div class="d-flex align-items-center p-4 border rounded department-card bg-white">
+          <i class="fas fa-road department-icon"></i>
+          <div>
+            <h5 class="mb-1 department-title">CIVIL</h5>
+            <p class="mb-1 fw-bold">(Since 1980)</p>
+            <a href="#" class="department-link" data-bs-toggle="modal" data-bs-target="#civilModal">Show Profile</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade" id="cseModal" tabindex="-1" aria-labelledby="cseModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="cseModalLabel">CSE Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Focuses on computing theory, programming, software design, and system development.
+      </div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="aidsModal" tabindex="-1" aria-labelledby="aidsModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="aidsModalLabel">AIDS Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Focuses on Artificial Intelligence and Data Science with real-world analytics.
+      </div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="aimlModal" tabindex="-1" aria-labelledby="aimlModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="aimlModalLabel">AIML Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Covers machine learning, deep learning, and AI-based technologies.
+      </div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="itModal" tabindex="-1" aria-labelledby="itModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="itModalLabel">IT Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Focuses on databases, networking, web development, and security.
+      </div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="eceModal" tabindex="-1" aria-labelledby="eceModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="eceModalLabel">ECE Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Covers electronics, signals, embedded systems, and communication protocols.
+      </div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="eeeModal" tabindex="-1" aria-labelledby="eeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="eeeModalLabel">EEE Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Focuses on electric machines, circuits, control systems, and power engineering.
+      </div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="mecModal" tabindex="-1" aria-labelledby="mecModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="mecModalLabel">MEC Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Covers thermodynamics, mechanics, production, and automotive systems.
+      </div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="civilModal" tabindex="-1" aria-labelledby="civilModalLabel" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="civilModalLabel">CIVIL Department</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Involves construction, surveying, structural design, and environmental engineering.
+      </div>
+    </div></div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

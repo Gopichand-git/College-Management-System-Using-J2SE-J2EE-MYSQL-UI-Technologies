@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faculty Update Form</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn-primary {
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #4e0fc6;
+        }
+
+        .input-group-text {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card p-4">
+        <h3 class="card-title text-center mb-4">Faculty Student Details</h3>
+        <form id="updateForm" action="edit1.do" method="post">
+            <div class="mb-3">
+                <label for="facultyId" class="form-label">Faculty ID</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                    <input type="text" class="form-control" id="facultyId" name="fid" placeholder="Enter Faculty ID"
+                        required>
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a valid Faculty ID.
+                </div>
+            </div>
+            <div class="d-grid position-relative">
+                <button type="submit" class="btn btn-primary" id="submitButton">
+                    <span class="spinner-border spinner-border-sm loading-spinner" id="loadingSpinner" role="status" aria-hidden="true"></span>
+                    Find Faculty
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-container">
+        <div id="msgToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">
+                    Faculty not found!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery (needed for AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Script for form submission and toast -->
+    <script>
+        $(document).ready(function () {
+            // Handle initial search form submission with AJAX
+            $('#updateForm').on('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+                
+                // Show loading spinner
+                $('#loadingSpinner').show();
+                $('#submitButton').prop('disabled', true);
+
+                $.ajax({
+                    url: 'edit1.do', // Send the request to the servlet
+                    type: 'POST',
+                    data: $(this).serialize(), // Serialize form data
+                    success: function (response) {
+                        // Handle HTML response from server
+                        if (response.includes("<html>")) {
+                            document.open();
+                            document.write(response);
+                            document.close();
+                            
+                            // Set up event handler for update form after loading new page
+                            setTimeout(function() {
+                                setupUpdateFormHandler();
+                            }, 500);
+                        } else if (response.includes("success")) {
+                            showToast("Faculty found successfully!", "success");
+                        } else {
+                            showToast("Unknown response from server", "failure");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // If faculty not found or other error
+                        let errorMessage = "An error occurred";
+                        
+                        if (xhr.status === 404) {
+                            errorMessage = "Faculty not found";
+                        } else if (xhr.responseText) {
+                            try {
+                                const jsonResponse = JSON.parse(xhr.responseText);
+                                errorMessage = jsonResponse.error || errorMessage;
+                            } catch (e) {
+                                errorMessage = xhr.responseText || errorMessage;
+                            }
+                        }
+                        
+                        showToast(errorMessage, 'failure');
+                    },
+                    complete: function() {
+                        // Hide loading spinner
+                        $('#loadingSpinner').hide();
+                        $('#submitButton').prop('disabled', false);
+                    }
+                });
+            });
+
+            // Function to set up event handler for the update form that will be loaded dynamically
+            function setupUpdateFormHandler() {
+                $('form[action="update1.do"]').on('submit', function (e) {
+                    e.preventDefault();
+                    
+                    // Show loading indicator
+                    const submitBtn = $(this).find('input[type="submit"]');
+                    const originalBtnValue = submitBtn.val();
+                    submitBtn.val('Updating...');
+                    submitBtn.prop('disabled', true);
+                    
+                    $.ajax({
+                        url: 'update1.do',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        success: function (response) {
+                            if (response === "success") {
+                                showToast("Faculty updated successfully!", "success");
+                                
+                                // Redirect after successful update
+                                setTimeout(function() {
+                                    window.location.href = "College.jsp"; // Change to your faculty list page
+                                }, 2000);
+                            } else {
+                                showToast("Update failed: " + response, "failure");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            let errorMessage = "Update failed";
+                            
+                            if (xhr.status === 400) {
+                                errorMessage = xhr.responseText || "Validation failed";
+                            } else if (xhr.status === 500) {
+                                if (xhr.responseText && xhr.responseText.includes("Data truncation")) {
+                                    errorMessage = "One or more fields contain data that is too long for the database";
+                                } else {
+                                    errorMessage = "Server error occurred during update";
+                                }
+                            }
+                            
+                            showToast(errorMessage, "failure");
+                        },
+                        complete: function() {
+                            // Restore button state
+                            submitBtn.val(originalBtnValue);
+                            submitBtn.prop('disabled', false);
+                        }
+                    });
+                });
+            }
+
+            // Function to display toast message
+            function showToast(message, type = 'failure') {
+                const toastEl = $('#msgToast');
+                $('#toastMessage').text(message);
+
+                // Set the toast color based on the type (success/failure)
+                if (type === 'success') {
+                    toastEl.removeClass('bg-danger').addClass('bg-success');
+                } else {
+                    toastEl.removeClass('bg-success').addClass('bg-danger');
+                }
+
+                // Show the toast
+                const bsToast = new bootstrap.Toast(toastEl[0], {
+                    delay: 3000
+                });
+                bsToast.show();
+            }
+
+            // Show welcome toast
+            showToast("Page Loaded Successfully!", "success");
+        });
+    </script>
+
+</body>
+
+</html>

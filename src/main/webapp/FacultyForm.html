@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap & jQuery CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin-top: 20px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, #141e30, #243b55);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .glass-form {
+            width: 100%;
+            max-width: 750px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        @media (max-width: 576px) {
+            .glass-form {
+                padding: 25px;
+            }
+
+            .form-title {
+                font-size: 22px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .glass-form {
+                max-width: 90%;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-form label {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .glass-form input,
+        .glass-form select {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: #fff;
+        }
+
+        .glass-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-form input:focus,
+        .glass-form select:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glass {
+            background-color: #00c9ff;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            transition: 0.3s;
+            border-radius: 10px;
+        }
+
+        .btn-glass:hover {
+            background-color: #92fe9d;
+            color: #000;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .form-check-label {
+            margin-right: 15px;
+        }
+
+        option {
+            color: black;
+        }
+
+        .form-text {
+            color: rgba(255, 255, 255, 0.7) !important;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glass-form">
+        <div class="form-title">Faculty Registration</div>
+
+        <form id="registerForm">
+
+            <div class="mb-3">
+                <label for="fid">Faculty ID</label>
+                <input type="text" name="fid" class="form-control" id="fid" required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="sfname">First Name</label>
+                    <input type="text" name="firstname" class="form-control" id="sfname" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="slname">Last Name</label>
+                    <input type="text" name="lastname" class="form-control" id="slname" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="addr">Address</label>
+                <input type="text" name="address" class="form-control" id="addr" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Gender</label><br>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="genderMale" name="gender" value="Male" required>
+                    <label class="form-check-label" for="genderMale">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="genderFemale" name="gender" value="Female">
+                    <label class="form-check-label" for="genderFemale">Female</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control" id="email" required>
+                <small class="form-text">Format: example@domain.com</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="mobile">Mobile</label>
+                <input type="text" name="mobile" class="form-control" id="mobile" placeholder="10 digits only" required>
+                <small class="form-text">Must be exactly 10 digits</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="course">Course</label>
+                <select name="course" class="form-select" id="course" required>
+                    <option value="" disabled selected>Select Course</option>
+                    <option value="BTECH">B.TECH</option>
+                    <option value="MTECH">M.TECH</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Branch</label><br>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchCSE" name="branch" value="CSE" required>
+                    <label class="form-check-label" for="branchCSE">CSE</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchAIDS" name="branch" value="AIDS">
+                    <label class="form-check-label" for="branchAIDS">AIDS</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchAIML" name="branch" value="AIML">
+                    <label class="form-check-label" for="branchAIML">AIML</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchIT" name="branch" value="IT">
+                    <label class="form-check-label" for="branchIT">IT</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchECE" name="branch" value="ECE">
+                    <label class="form-check-label" for="branchECE">ECE</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchEEE" name="branch" value="EEE">
+                    <label class="form-check-label" for="branchEEE">EEE</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchMEC" name="branch" value="MEC">
+                    <label class="form-check-label" for="branchMEC">MEC</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="branchCIVIL" name="branch" value="CIVIL">
+                    <label class="form-check-label" for="branchCIVIL">CIVIL</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="designation">Designation</label>
+                <input type="text" name="designation" class="form-control" id="designation">
+            </div>
+
+            <div class="mb-3">
+                <label for="qualification">Qualification</label>
+                <input type="text" name="qualification" class="form-control" id="qualification">
+            </div>
+
+            <div class="mb-3">
+                <label for="salary">Salary</label>
+                <input type="text" name="salary" class="form-control" id="salary">
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="city">City</label>
+                    <input type="text" name="city" class="form-control" id="city" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="pin">Pin Code</label>
+                    <input type="text" name="pin" class="form-control" id="pin" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="state">State</label>
+                <input type="text" name="state" class="form-control" id="state" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="join">Joining Date</label>
+                <input type="text" name="joining" class="form-control" id="join" required>
+                <small class="form-text">Format: YYYY-MM-DD (e.g., 2025-04-23)</small>
+            </div>
+
+            <div class="d-flex justify-content-between">
+            <a href="College.jsp" class="btn btn-glass" style="background-color: #4a6fa5;">Back to Menu</a>
+                <button type="submit" class="btn btn-glass">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast Message -->
+    <div class="toast-container">
+        <div id="msgToast" class="toast align-items-center text-white border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">Message</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery AJAX -->
+    <script>
+        $(document).ready(function () {
+            // Form submission with validation
+            $('#registerForm').on('submit', function (e) {
+                e.preventDefault();
+
+                // Validate email
+                const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                const email = $('#email').val();
+                if (!emailPattern.test(email)) {
+                    showToast('⚠️ Please enter a valid email address', false);
+                    $('#email').focus();
+                    return;
+                }
+
+                // Validate mobile (10 digits)
+                const mobilePattern = /^\d{10}$/;
+                const mobile = $('#mobile').val();
+                if (!mobilePattern.test(mobile)) {
+                    showToast('⚠️ Please enter a valid 10-digit mobile number', false);
+                    $('#mobile').focus();
+                    return;
+                }
+
+                // Validate date format (YYYY-MM-DD)
+                const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+                const joinDate = $('#join').val();
+                if (!datePattern.test(joinDate)) {
+                    showToast('⚠️ Please enter date in YYYY-MM-DD format', false);
+                    $('#join').focus();
+                    return;
+                }
+
+                // All validation passed, proceed with AJAX call
+                $.ajax({
+                    url: 'add1.do',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response === "success") {
+                            showToast('🎉 Registration Successful!', true);
+                            $('#registerForm')[0].reset();
+                        } else {
+                            showToast('❌ ' + response, false);
+                        }
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 409) {
+                            showToast('⚠️ Faculty ID already exists. Please use a different ID.', false);
+                        } else if (xhr.responseText) {
+                            showToast('❌ ' + xhr.responseText, false);
+                        } else {
+                            showToast('❌ Failed to Register. Try again!', false);
+                        }
+                    }
+                });
+            });
+
+            function showToast(message, success) {
+                const toastEl = $('#msgToast');
+                $('#toastMessage').text(message);
+
+                // Set appropriate background color
+                toastEl.removeClass('bg-success bg-danger bg-warning');
+
+                if (success) {
+                    toastEl.addClass('bg-success');
+                    $('#toastMessage').css('color', '#fff');
+                } else if (message.includes('⚠️')) {
+                    toastEl.addClass('bg-warning');
+                    $('#toastMessage').css('color', '#000'); // Dark text for warning background
+                } else {
+                    toastEl.addClass('bg-danger');
+                    $('#toastMessage').css('color', '#fff');
+                }
+
+                new bootstrap.Toast(toastEl[0]).show();
+
+                setTimeout(function () {
+                    toastEl.toast('hide');
+                }, 4000); // Hide toast after 4 seconds
+            }
+        });
+    </script>
+</body>
+
+</html>

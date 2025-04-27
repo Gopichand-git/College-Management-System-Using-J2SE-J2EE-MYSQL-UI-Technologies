@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Update Form</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn-primary {
+            border-radius: 10px;
+            transition: background 0.3s;
+            background-color: #0d6efd;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+        .input-group-text {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+        }
+        
+        .spinner-border {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        /* Styles for the update form */
+        .update-form-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .update-form-container .card {
+            max-width: 100%;
+        }
+        
+        .update-form-container .form-control {
+            margin-bottom: 8px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-wrapper">
+        <div class="card p-4" id="initial-form">
+            <h3 class="card-title text-center mb-4">Update Student Details</h3>
+            <form id="updateForm" action="edit.do" method="post">
+                <div class="mb-3">
+                    <label for="studentId" class="form-label">Student ID</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                        <input type="text" class="form-control" id="studentId" name="sid" placeholder="Enter Student ID"
+                            required>
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter a valid Student ID.
+                    </div>
+                </div>
+                <div class="d-grid position-relative">
+                    <button type="submit" class="btn btn-primary" id="submitButton">
+                        <span class="spinner-border spinner-border-sm d-none" id="loadingSpinner" role="status"></span>
+                        <span>Edit Student</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="student-form-container" class="update-form-container">
+            <!-- The update form will be injected here -->
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-container">
+        <div id="msgToast" class="toast align-items-center text-white border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery (needed for AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Script for form submission and toast -->
+    <script>
+        $(document).ready(function () {
+            // Handle initial form submission with AJAX
+            $('#updateForm').on('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+                
+                // Show loading spinner
+                $('#loadingSpinner').removeClass('d-none');
+                $('#submitButton').prop('disabled', true);
+
+                $.ajax({
+                    url: 'edit.do', // Send the request to the servlet
+                    type: 'POST',
+                    data: $(this).serialize(), // Serialize form data
+                    success: function (response) {
+                        // If success, inject the response HTML into the page
+                        $('#student-form-container').html(response);
+                        $('#initial-form').hide();
+                        
+                        // Set up event handler for the update form
+                        setupUpdateFormHandler();
+                        
+                        // Show success toast
+                        showToast("Student found successfully!", "success");
+                    },
+                    error: function (xhr, status, error) {
+                        // Hide loading spinner
+                        $('#loadingSpinner').addClass('d-none');
+                        $('#submitButton').prop('disabled', false);
+                        
+                        // If student not found, show toast message
+                        if (xhr.status === 404) {
+                            try {
+                                const errorData = JSON.parse(xhr.responseText);
+                                showToast(errorData.error || "Student not found", "failure");
+                            } catch (e) {
+                                showToast("Student not found", "failure");
+                            }
+                        } else {
+                            showToast("An error occurred. Please try again.", "failure");
+                        }
+                    }
+                });
+            });
+            
+            // Function to set up event handler for the update form
+            function setupUpdateFormHandler() {
+                $('#studentUpdateForm').on('submit', function (e) {
+                    e.preventDefault();
+                    
+                    // Show loading spinner
+                    $('#updateLoadingSpinner').removeClass('d-none');
+                    $('#updateSubmitButton').prop('disabled', true);
+                    
+                    $.ajax({
+                        url: 'update.do',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function (response) {
+                            // Hide loading spinner
+                            $('#updateLoadingSpinner').addClass('d-none');
+                            $('#updateSubmitButton').prop('disabled', false);
+                            
+                            if (response.message) {
+                                showToast(response.message, "success");
+                                
+                                // Redirect to college.jsp after successful update
+                                setTimeout(function() {
+                                    window.location.href = 'College.jsp';
+                                }, 2000); // Redirect after 2 seconds (gives time to see the toast)
+                            } else if (response.error) {
+                                showToast(response.error, "failure");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            // Hide loading spinner
+                           
+                            $('#updateSubmitButton').prop('disabled', false);
+                            
+                            try {
+                                const errorData = JSON.parse(xhr.responseText);
+                                showToast(errorData.error || "Update failed", "failure");
+                            } catch (e) {
+                                showToast("Update failed. Please try again.", "failure");
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Function to display toast message
+            function showToast(message, type = 'failure') {
+                const toastEl = $('#msgToast');
+                $('#toastMessage').text(message);
+
+                // Set the toast color based on the type (success/failure)
+                if (type === 'success') {
+                    toastEl.removeClass('bg-danger').addClass('bg-success');
+                } else {
+                    toastEl.removeClass('bg-success').addClass('bg-danger');
+                }
+
+                // Show the toast
+                const toast = new bootstrap.Toast(toastEl[0], {
+                    delay: 3000
+                });
+                toast.show();
+            }
+        });
+    </script>
+</body>
+</html>

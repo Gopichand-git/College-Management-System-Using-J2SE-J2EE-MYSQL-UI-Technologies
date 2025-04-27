@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Icon Grid Layout</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #fff;
+        color: #0a2348;
+      }
+      
+      .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 30px;
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      
+      .item {
+        text-align: center;
+        transition: transform 0.3s;
+      }
+      
+      .item:hover {
+        transform: scale(1.1);
+      }
+      
+      .icon {
+        width: 80px;
+        height: 80px;
+        border: 1px dashed #0a2348;
+        border-radius: 50%;
+        margin: 0 auto 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: #000;
+      }
+      
+      .highlight .icon {
+        background: #ffc107;
+        border: none;
+        color: #fff;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 16px;
+      }
+      h2{
+        text-align: center;
+        background-color: #0a2348;
+        color: #ffc107;
+        padding-top: 30px;
+        padding-bottom: 30px;
+      }
+  </style>
+</head>
+<body>
+    <h2>Rules and Regulations</h2>
+  <div class="container">
+    <div class="item">
+      <div class="icon"><i class="fas fa-tshirt"></i></div>
+      <p>Dress and Behaviour</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-desktop"></i></div>
+      <p>Books and Personal Computers</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-comment-dots"></i></div>
+      <p>Punctuality</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-book"></i></div>
+      <p>Library and Information Center</p>
+    </div>
+    <div class="item highlight">
+      <div class="icon"><i class="fas fa-ban"></i></div>
+      <p>Ragging</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-clipboard"></i></div>
+      <p>Examinations</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-laptop"></i></div>
+      <p>Computer Center</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-flask"></i></div>
+      <p>Laboratories</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-id-card"></i></div>
+      <p>Identity Cards</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-random"></i></div>
+      <p>Transitory Regulations</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-clock"></i></div>
+      <p>College Timings</p>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+      <p>Others</p>
+    </div>
+  </div>
+</body>
+</html>

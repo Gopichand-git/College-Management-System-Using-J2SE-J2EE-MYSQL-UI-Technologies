@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>B.Tech First Year Courses</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    thead {
+      background-color: #e74c3c;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    th, td {
+      padding: 15px 20px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f1f1;
+      transition: background-color 0.3s;
+    }
+
+    th:first-child, td:first-child {
+      text-align: center;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      table {
+        border: 0;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        display: block;
+        border-bottom: 2px solid #e74c3c;
+      }
+
+      td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 20px;
+        width: calc(50% - 40px);
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left;
+        color: #e74c3c;
+      }
+
+      tbody tr:hover {
+        background-color: #fff5f5;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>B.Tech First Year Courses</h1>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>S.NO</th>
+          <th>COURSE</th>
+          <th>INTAKE</th>
+          <th>FEE IN INR</th>
+        </tr>
+      </thead>
+      <tbody>
+       <tr>
+          <td data-label="S.NO">1</td>
+          <td data-label="COURSE">B.Tech-Computer Science and Engineering</td>
+          <td data-label="INTAKE">360</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+        <tr>
+          <td data-label="S.NO">2</td>
+          <td data-label="COURSE">B.Tech-Artificial Intelligence and Data Science</td>
+          <td data-label="INTAKE">240</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+        <tr>
+          <td data-label="S.NO">3</td>
+          <td data-label="COURSE">B.Tech-Artificial Intelligence and Machine Learning</td>
+          <td data-label="INTAKE">240</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+        <tr>
+          <td data-label="S.NO">4</td>
+          <td data-label="COURSE">B.Tech-Information Technology</td>
+          <td data-label="INTAKE">180</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+         <tr>
+          <td data-label="S.NO">5</td>
+          <td data-label="COURSE">B.Tech-Electronics and Communication Engineering</td>
+          <td data-label="INTAKE">180</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+         <tr>
+          <td data-label="S.NO">6</td>
+          <td data-label="COURSE">B.Tech-Electrical and Electronics Engineering</td>
+          <td data-label="INTAKE">120</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+        <tr>
+          <td data-label="S.NO">7</td>
+          <td data-label="COURSE">B.Tech-Mechanical Engineering</td>
+          <td data-label="INTAKE">120</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+        <tr>
+          <td data-label="S.NO">8</td>
+          <td data-label="COURSE">B.Tech-Civil Engineering</td>
+          <td data-label="INTAKE">120</td>
+          <td data-label="FEE IN INR">1,05,000/-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <h1>B.Tech Second Year (Lateral Entry)</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Course</th>
+        <th>Intake</th>
+        <th>Fee in INR</th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr>
+        <td data-label="S.No">1</td>
+        <td data-label="Course">B.Tech - Computer Science and Engineering</td>
+        <td data-label="Intake">30</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+      
+      <tr>
+        <td data-label="S.No">2</td>
+        <td data-label="Course">B.Tech - Artificial Intelligence and Data Science</td>
+        <td data-label="Intake">18</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+      <tr>
+        <td data-label="S.No">3</td>
+        <td data-label="Course">B.Tech - Artificial Intelligence and Machine Learning</td>
+        <td data-label="Intake">18</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+       <tr>
+        <td data-label="S.No">4</td>
+        <td data-label="Course">B.Tech - Information Technology</td>
+        <td data-label="Intake">18</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+      <tr>
+        <td data-label="S.No">5</td>
+        <td data-label="Course">B.Tech - Electronics and Communication Engineering</td>
+        <td data-label="Intake">24</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+       <tr>
+        <td data-label="S.No">6</td>
+        <td data-label="Course">B.Tech - Electrical and Electronics Engineering</td>
+        <td data-label="Intake">12</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+       <tr>
+        <td data-label="S.No">7</td>
+        <td data-label="Course">B.Tech - Mechanical Engineering</td>
+        <td data-label="Intake">18</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+      <tr>
+        <td data-label="S.No">8</td>
+        <td data-label="Course">B.Tech - Civil Engineering</td>
+        <td data-label="Intake">18</td>
+        <td data-label="Fee in INR">77,000/-</td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+  <h1>M.Tech</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>S.NO</th>
+        <th>COURSE</th>
+        <th>INTAKE</th>
+        <th>FEE IN INR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>M.Tech-Structural Engineering</td>
+        <td>12</td>
+        <td>90,000/-</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>M.Tech-Computer Science and Technology</td>
+        <td>12</td>
+        <td>90,000/-</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>M.Tech-Communication Systems</td>
+        <td>6</td>
+        <td>90,000/-</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>M.Tech- Power Systems and Automation</td>
+        <td>6</td>
+        <td>90,000/-</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>M.Tech-Information Technology</td>
+        <td>6</td>
+        <td>90,000/-</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>M.Tech-CAD/CAM</td>
+        <td>6</td>
+        <td>90,000/-</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

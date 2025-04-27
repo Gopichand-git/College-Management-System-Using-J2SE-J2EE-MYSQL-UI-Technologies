@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GEC Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .header-title {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #ffffff;
+      text-align: center;
+      font-size: 50px;
+      font-weight: bold;
+      padding: 15px 0;
+      z-index: 1000;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    .login-wrapper {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(40px);
+      padding: 0 15px;
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 40px 30px 80px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .login-card h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #030303;
+      font-weight: bold;
+    }
+
+    .form-floating label {
+      color: #000000;
+    }
+
+    .form-floating .form-control:focus ~ label,
+    .form-floating .form-control:not(:placeholder-shown) ~ label {
+      color: #072ac6;
+      transform: scale(0.9) translateY(-1.5rem) translateX(0.2rem);
+    }
+
+    .form-check-label {
+      color: #0d0d0e;
+    }
+
+    .btn-success {
+      background-color: #03a9f4;
+      border-color: #03a9f4;
+    }
+
+    .btn-success:hover {
+      background-color: #0288d1;
+      border-color: #0288d1;
+    }
+
+    a {
+      text-decoration: none;
+      color: #4e0ff0;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #4b28f7;
+    }
+
+    #errorBox, #successBox {
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 5px;
+     
+      text-align: center;
+      font-weight: bold;
+      color: rgb(248, 21, 21);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.897);
+      z-index: 10;
+    }
+
+    .alert-danger {
+      border: none !important;
+      color: #ff2929;
+      box-shadow: none;
+    }
+
+    .alert-success {
+      border: none !important;
+      color: #69f0ae;
+      box-shadow: none;
+    }
+
+    .spinner-border {
+      display: none;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .login-btn-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .header-title {
+        font-size: 30px;
+        padding: 10px 0;
+      }
+      
+      .login-card {
+        padding: 30px 20px 70px;
+        max-width: 100%;
+      }
+      
+      .login-wrapper {
+        padding-top: 80px; /* Add space below the header on mobile */
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 24px;
+        padding: 8px 0;
+      }
+      
+      .login-card {
+        padding: 20px 15px 60px;
+      }
+      
+      .login-card h2 {
+        margin-bottom: 20px;
+      }
+    }
+
+    /* Ensure form elements are properly sized on all devices */
+    .form-floating .form-control {
+      height: calc(3.5rem + 2px);
+      padding: 1rem 0.75rem;
+    }
+    
+    /* Navigation links */
+    .nav-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+    
+    @media (max-width: 480px) {
+      .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    /* Added styles for Create Account link */
+    .create-account {
+      text-align: center;
+      margin-top: 20px; 
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 15px;
+    }
+    
+    .create-account a {
+      font-weight: bold;
+      color: #4e0ff0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-title">
+    GOPICHAND ENGINEERING COLLEGE
+  </div>
+
+  <div class="login-wrapper pt-5">
+    <div class="login-card mt-5">
+      <h2>Login</h2>
+      <form id="loginForm" method="post">
+
+        <!-- Email -->
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off" required>
+          <label for="email"><i class="fas fa-user"></i> Email</label>
+        </div>
+
+        <!-- Password -->
+        <div class="form-floating mb-3 position-relative">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <span class="position-absolute top-50 end-0 translate-middle-y pe-3" onclick="togglePassword()" style="cursor: pointer;">
+            <i class="fas fa-eye text-black" id="toggleIcon"></i>
+          </span>
+        </div>
+
+        <!-- Remember Me -->
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Remember Me</label>
+        </div>
+
+        <!-- Alerts (inside login-card for blur effect) -->
+        <div class="alert alert-danger text-center" id="errorBox" role="alert"></div>
+        <div class="alert alert-success text-center" id="successBox" role="alert">Login successful!</div> 
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-success" id="loginBtn">
+            <span class="login-btn-content">
+              <span>Login</span>
+              <div class="spinner-border spinner-border-sm text-light" role="status" id="loadingSpinner"></div>
+            </span>
+          </button>
+        </div>
+
+        <!-- Links -->
+        <div class="nav-links">
+          <a href="resetpassword.html">Forgot Password?</a>
+          <a href="index.html">Back To Home</a>
+        </div>
+        
+        <!-- Create Account Link -->
+        <!-- <div class="create-account">
+          <a href="signup.html">Create an Account</a>
+        </div> -->
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById("password");
+      const icon = document.getElementById("toggleIcon");
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+        pwd.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+      }
+    }
+
+    $(document).ready(function () {
+      // Load remembered email if exists
+      if (localStorage.getItem("rememberedEmail")) {
+        $("#email").val(localStorage.getItem("rememberedEmail"));
+        $("#rememberMe").prop("checked", true);
+      }
+
+      $("#loginForm").submit(function (e) {
+    	  e.preventDefault();
+    	  $("#errorBox, #successBox").hide();
+    	  $("#loadingSpinner").show();
+    	  $("#loginBtn").prop("disabled", true);
+
+    	  const email = $("#email").val().trim();
+    	  const password = $("#password").val().trim();
+
+    	  // Save email if remember me is checked
+    	  if ($("#rememberMe").is(":checked")) {
+    	    localStorage.setItem("rememberedEmail", email);
+    	  } else {
+    	    localStorage.removeItem("rememberedEmail");
+    	  }
+
+    	  $.ajax({
+    	    url: "./login",
+    	    method: "POST",
+    	    data: { email: email, password: password },
+    	    success: function (response) {
+    	      $("#loadingSpinner").hide();
+    	      $("#loginBtn").prop("disabled", false);
+    	      
+    	      // Log the response for debugging
+    	      console.log("Server response:", response);
+    	      
+    	      // Check if the response contains "success"
+    	      if (response.trim() === "success") {
+    	        $("#successBox").fadeIn();
+    	        setTimeout(() => {
+    	          $("#successBox").fadeOut();
+    	          // Redirect to OTP page with email parameter
+    	          window.location.href = "loginotp.html?email=" + encodeURIComponent(email);
+    	        }, 1500);
+    	      } else {
+    	        $("#errorBox").text("Invalid email or password.").fadeIn();
+    	        setTimeout(() => {
+    	          $("#errorBox").fadeOut();
+    	        }, 3000);
+    	        $("#password").val("");
+    	      }
+    	    },
+    	    error: function (xhr, status, error) {
+    	      $("#loadingSpinner").hide();
+    	      $("#loginBtn").prop("disabled", false);
+    	      console.error("AJAX Error:", status, error);
+    	      $("#errorBox").text("Server error. Please try again later.").fadeIn();
+    	      setTimeout(() => {
+    	        $("#errorBox").fadeOut();
+    	      }, 3000);
+    	    }
+    	  });
+    	});
+      // Clear error message when input fields are focused
+      $("#email, #password").focus(function () {
+        $("#errorBox").fadeOut();
+      });
+    });
+
+    // Prevent back button after logout
+    if (window.history && window.history.pushState) {
+      window.history.pushState('forward', null, window.location.href);
+      window.history.forward();
+    }
+    window.onunload = function () { null };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

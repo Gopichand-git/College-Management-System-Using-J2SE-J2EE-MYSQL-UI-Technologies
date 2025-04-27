@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Placement Statistics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #54678f;
+      margin: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #e1360b;
+      font-size: 30px;
+      background-color: black;
+    }
+
+    table {
+      width: 90%;
+      margin: auto;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #eee;
+      font-weight: bold;
+    }
+
+    td:first-child {
+      font-weight: bold;
+    }
+
+    /* Highlight the numbers (optional) */
+    td {
+      color: #333;
+    }
+
+    /* Style for NA values */
+    td:contains('NA') {
+      color: #888;
+      font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+
+      td::before {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        color: #555;
+      }
+
+      td:nth-of-type(1)::before { content: "Class of"; }
+      td:nth-of-type(2)::before { content: "CIVIL"; }
+      td:nth-of-type(3)::before { content: "EEE"; }
+      td:nth-of-type(4)::before { content: "ME"; }
+      td:nth-of-type(5)::before { content: "ECE"; }
+      td:nth-of-type(6)::before { content: "CSE"; }
+      td:nth-of-type(7)::before { content: "IT"; }
+      td:nth-of-type(8)::before { content: "AI&DS"; }
+      td:nth-of-type(9)::before { content: "AI&ML"; }
+      td:nth-of-type(10)::before { content: "IOT"; }
+      td:nth-of-type(11)::before { content: "MBA"; }
+      td:nth-of-type(12)::before { content: "Total"; }
+    }
+  </style>
+</head>
+<body>
+
+<h2>Placement Statistics 2022–2025</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class of</th>
+      <th>CIVIL</th>
+      <th>EEE</th>
+      <th>ME</th>
+      <th>ECE</th>
+      <th>CSE</th>
+      <th>IT</th>
+      <th>AI&amp;DS</th>
+      <th>AI&amp;ML</th>
+      <th>IOT</th>
+      <th>MBA</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025</td>
+      <td>14</td>
+      <td>36</td>
+      <td>85</td>
+      <td>63</td>
+      <td>150</td>
+      <td>46</td>
+      <td>55</td>
+      <td>11</td>
+      <td>24</td>
+      <td>37</td>
+      <td>521*</td>
+    </tr>
+    <tr>
+      <td>2024</td>
+      <td>25</td>
+      <td>47</td>
+      <td>99</td>
+      <td>107</td>
+      <td>180</td>
+      <td>97</td>
+      <td>42</td>
+      <td>NA</td>
+      <td>38</td>
+      <td>40</td>
+      <td>675</td>
+    </tr>
+    <tr>
+      <td>2023</td>
+      <td>57</td>
+      <td>78</td>
+      <td>81</td>
+      <td>170</td>
+      <td>202</td>
+      <td>73</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>65</td>
+      <td>726</td>
+    </tr>
+    <tr>
+      <td>2022</td>
+      <td>75</td>
+      <td>107</td>
+      <td>82</td>
+      <td>179</td>
+      <td>230</td>
+      <td>80</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>35</td>
+      <td>788</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

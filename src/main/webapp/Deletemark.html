@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Header with College Name -->
+  <div class="header text-center my-4">
+    <h1>GOPICHAND ENGINEERING COLLEGE</h1>
+  </div>
+
+  <div class="container vh-100 d-flex justify-content-center align-items-center">
+    <!-- Form with responsive layout -->
+    <form id="deleteMarkForm" class="row w-100" style="max-width: 400px;">
+      <!-- SID Input (centered and responsive) -->
+      <div class="col-12 mb-3">
+        <input class="form-control" type="text" name="sid" placeholder="SID" required>
+      </div>
+
+      <!-- Submit Button (centered) -->
+      <div class="col-12 mb-3">
+        <button class="btn btn-danger w-100" type="submit">Delete</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Toast Message Container -->
+  <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+  <!-- Bootstrap and jQuery (for the form submission) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Show Toast Message
+    function showToast(message, type = 'success') {
+      const toastHTML = `
+        <div class="toast align-items-center text-bg-${type} border-0 show mb-2" role="alert">
+          <div class="d-flex">
+            <div class="toast-body">${message}</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>`;
+      $('#toastContainer').html(toastHTML);
+    }
+
+    // Handling form submission with jQuery (AJAX)
+    $('#deleteMarkForm').submit(function(e) {
+      e.preventDefault();
+
+      // Clear any previous error messages
+      $('.error-msg').remove();
+
+      // Validate SID input
+      var isValid = true;
+      var sid = $('input[name="sid"]').val();
+
+      if (sid === "") {
+        isValid = false;
+        $('input[name="sid"]').after('<div class="error-msg text-danger">SID is required.</div>');
+      }
+
+      // If validation passes, proceed with AJAX request
+      if (isValid) {
+        $.post("DeleteMarksServlet", $(this).serialize(), function(resp) {
+          // Show success message as toast
+          showToast("Deleted Successfully: " + resp, 'success');
+          $('input[name="sid"]').val('');
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          // Show error message as toast
+          showToast("An error occurred while processing your request: " + textStatus + " - " + errorThrown, 'danger');
+          $('input[name="sid"]').val('');
+        });
+      } else {
+        // If validation fails, show error message as toast
+        showToast("Please fill in all required fields.", 'danger');
+        $('input[name="sid"]').val('');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">	
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Sign Up - Gopichand Engineering College</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1557683316-973673baf926') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    .header-title {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #ffffff;
+      text-align: center;
+      font-size: 50px;
+      font-weight: bold;
+      padding: 15px 0;
+      z-index: 1000;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    .signup-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+      padding: 20px;
+      padding-top: 100px; /* Account for fixed header */
+      padding-bottom: 40px;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+      margin: 20px auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 25px;
+      font-weight: bold;
+    }
+
+    label {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 12px;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+      background-color: #fff;
+    }
+
+    .btn {
+      width: 100%;
+      border-radius: 10px;
+      padding: 12px;
+      font-weight: 600;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    #status {
+      font-size: 14px;
+      margin-top: 10px;
+      padding: 5px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    
+    .text-danger {
+      color: #ff5252 !important;
+      font-weight: bold;
+    }
+    
+    .text-success {
+      color: #4caf50 !important;
+      font-weight: bold;
+    }
+
+    /* Enhanced form styles */
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .icon-wrapper {
+      position: absolute;
+      right: 15px;
+      top: 43px;
+      color: #555;
+      cursor: pointer;
+    }
+    
+    /* OTP Timer */
+    #otpTimer {
+      margin-top: 5px;
+      color: #fff;
+      font-size: 13px;
+      text-align: right;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .header-title {
+        font-size: 30px;
+        padding: 10px 0;
+      }
+      
+      .container {
+        padding: 20px;
+      }
+      
+      .signup-wrapper {
+        padding-top: 80px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 24px;
+        padding: 8px 0;
+      }
+      
+      .container {
+        padding: 15px;
+        margin: 10px;
+      }
+      
+      .form-control {
+        padding: 10px;
+      }
+      
+      h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+    }
+    
+    /* Back to login link */
+    .back-to-login {
+      text-align: center;
+      margin-top: 15px;
+    }
+    
+    .back-to-login a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .back-to-login a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Password strength indicator */
+    .password-strength {
+      height: 5px;
+      margin-top: 5px;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    .strength-weak {
+      background-color: #ff4d4d;
+      width: 33%;
+    }
+    
+    .strength-medium {
+      background-color: #ffd700;
+      width: 66%;
+    }
+    
+    .strength-strong {
+      background-color: #4caf50;
+      width: 100%;
+    }
+    
+    /* Toast notification */
+    .toast-container {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      z-index: 1050;
+    }
+    
+    .toast {
+      min-width: 300px;
+    }
+    
+    /* OTP input field styling */
+    #otp {
+      letter-spacing: 8px;
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    /* Loading spinner overlay */
+    .processing-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    
+    .processing-overlay .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
+    
+    .processing-text {
+      color: white;
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    /* Staff badge */
+    .staff-badge {
+      background-color: #ff9800;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-left: 10px;
+      display: inline-block;
+    }
+    
+    /* OTP animation and focus */
+    @keyframes otpHighlight {
+      0% { background-color: rgba(255, 255, 255, 0.9); }
+      50% { background-color: rgba(13, 110, 253, 0.2); }
+      100% { background-color: rgba(255, 255, 255, 0.9); }
+    }
+    
+    .otp-highlight {
+      animation: otpHighlight 1s ease;
+    }
+    
+    /* Visual feedback for auto-submission */
+    .otp-submitting {
+      background-color: rgba(13, 110, 253, 0.1) !important;
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-title">
+  GOPICHAND ENGINEERING COLLEGE
+</div>
+
+<div class="signup-wrapper">
+  <div class="container">
+    <h2>Staff Sign Up <span class="staff-badge">Staff Only</span></h2>
+    <form id="signupForm">
+      <div class="form-group" id="emailGroup">
+        <label for="email" class="form-label">Staff Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your staff email address" required>
+        <span id="emailStatus" class="text-danger d-block mt-1"></span>
+        <small class="text-white d-block mt-1">Use your official staff email address</small>
+      </div>
+
+      <div class="form-group" id="passwordGroup">
+        <label for="password" class="form-label">Password</label>
+        <div class="position-relative">
+          <input type="password" class="form-control" id="password" placeholder="Create a strong password" required>
+          <span class="icon-wrapper" onclick="togglePasswordVisibility('password')">
+            <i class="fas fa-eye" id="passwordToggle"></i>
+          </span>
+        </div>
+        <div class="password-strength" id="passwordStrength"></div>
+        <small class="text-white d-block mt-1">Password must contain uppercase, lowercase, number, and special character (8-20 chars)</small>
+      </div>
+
+      <div class="form-group hidden" id="confirmPasswordGroup">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <div class="position-relative">
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+          <span class="icon-wrapper" onclick="togglePasswordVisibility('confirmPassword')">
+            <i class="fas fa-eye" id="confirmPasswordToggle"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group hidden" id="mobileGroup">
+        <label for="mobile" class="form-label">Mobile Number</label>
+        <div class="input-group">
+          <span class="input-group-text">+91</span>
+          <input type="text" class="form-control" id="mobile" placeholder="Enter your 10-digit mobile number" required>
+        </div>
+      </div>
+
+      <div class="form-group hidden" id="staffCodeGroup">
+        <label for="staffCode" class="form-label">Staff Access Code</label>
+        <div class="position-relative">
+          <input type="password" class="form-control" id="staffCode" placeholder="Enter staff access code" required>
+          <span class="icon-wrapper" onclick="togglePasswordVisibility('staffCode')">
+            <i class="fas fa-eye" id="staffCodeToggle"></i>
+          </span>
+        </div>
+        <small class="text-white d-block mt-1">Only authorized staff members have access to this code</small>
+      </div>
+
+      <button type="button" class="btn btn-primary mb-2 hidden" id="sendOtpBtn">Send OTP</button>
+
+      <div class="form-group hidden" id="otpGroup">
+        <label for="otp" class="form-label">OTP</label>
+        <input type="text" class="form-control" id="otp" placeholder="Enter 6-digit OTP" maxlength="6" required>
+        <div id="otpTimer" class="text-white"></div>
+        <small id="otpInfo" class="text-white d-block mt-1">The form will be automatically submitted when all 6 digits are entered</small>
+      </div>
+
+      <button type="submit" class="btn btn-success mb-2 hidden" id="signupBtn">Sign Up</button>
+
+      <!-- STATUS MESSAGE BELOW BUTTON -->
+      <div id="status" class="text-danger d-block text-center"></div>
+      
+      <div class="back-to-login">
+        <a href="login.html"><i class="fas fa-arrow-left"></i> Back to Login</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast container for notifications -->
+<div class="toast-container">
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+    <div class="toast-header">
+      <strong class="me-auto" id="toastTitle">Notification</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" id="toastMessage"></div>
+  </div>
+</div>
+
+<!-- Processing overlay -->
+<div class="processing-overlay hidden" id="processingOverlay">
+  <div class="spinner-border text-light" role="status">
+    <span class="visually-hidden">Processing...</span>
+  </div>
+  <div class="processing-text">Processing your registration...</div>
+</div>
+
+<script>
+  let otpExpireTime = 0;
+  let otpTimerInterval;
+  let isProcessing = false;
+
+  function togglePasswordVisibility(inputId) {
+    const input = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(inputId + 'Toggle');
+    
+    if (input.type === 'password') {
+      input.type = 'text';
+      toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+      input.type = 'password';
+      toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+  }
+
+  function updateOtpTimer() {
+    const timeLeft = Math.max(0, Math.floor((otpExpireTime - new Date().getTime()) / 1000));
+    if (timeLeft <= 0) {
+      clearInterval(otpTimerInterval);
+      $('#otpTimer').text('OTP expired. Please request a new one.');
+      $('#otpTimer').addClass('text-danger').removeClass('text-white');
+    } else {
+      $('#otpTimer').text(`OTP expires in: ${timeLeft} seconds`);
+      $('#otpTimer').removeClass('text-danger').addClass('text-white');
+    }
+  }
+
+  function resetForm() {
+    // Clear all form fields
+    $("#signupForm")[0].reset();
+    
+    // Reset visibility of form sections
+    $('#confirmPasswordGroup, #mobileGroup, #staffCodeGroup, #sendOtpBtn, #otpGroup, #signupBtn').addClass('hidden');
+    
+    // Reset status messages
+    $('#status').text('').removeClass('text-success').addClass('text-danger');
+    $('#emailStatus').text('');
+    
+    // Reset password strength indicator
+    $('#passwordStrength').removeClass('strength-weak strength-medium strength-strong').css('width', '0');
+    
+    // Clear any running timers
+    clearInterval(otpTimerInterval);
+    $('#otpTimer').text('').removeClass('text-danger').addClass('text-white');
+    
+    // Reset UI state
+    isProcessing = false;
+    $('#processingOverlay').addClass('hidden');
+    $('#sendOtpBtn').text('Send OTP').prop('disabled', false);
+  }
+
+  function checkPasswordStrength(password) {
+    // Remove existing classes
+    $('#passwordStrength').removeClass('strength-weak strength-medium strength-strong');
+    
+    if (password.length < 8) {
+      return;
+    }
+    
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    
+    const strength = [hasUppercase, hasLowercase, hasNumbers, hasSpecial].filter(Boolean).length;
+    
+    if (strength <= 2) {
+      $('#passwordStrength').addClass('strength-weak');
+    } else if (strength === 3) {
+      $('#passwordStrength').addClass('strength-medium');
+    } else {
+      $('#passwordStrength').addClass('strength-strong');
+    }
+  }
+  
+  // Show toast notification
+  function showToast(title, message, isError = false) {
+    $('#toastTitle').text(title);
+    $('#toastMessage').text(message);
+    
+    if (isError) {
+      $('.toast').addClass('bg-danger text-white');
+    } else {
+      $('.toast').removeClass('bg-danger text-white');
+    }
+    
+    const toast = new bootstrap.Toast($('.toast'));
+    toast.show();
+  }
+  
+  // Submit the form with improved error handling and auto-submission
+  function submitForm() {
+    if (isProcessing) return;
+    
+    const otp = $('#otp').val();
+    if (otp.length !== 6) {
+      $('#status').removeClass('text-success').addClass('text-danger').text("Please enter the 6-digit OTP.");
+      return;
+    }
+    
+    const now = new Date().getTime();
+    if (now > otpExpireTime) {
+      $('#status').removeClass('text-success').addClass('text-danger').text("OTP expired. Please request a new one.");
+      return;
+    }
+
+    // Show loading overlay
+    isProcessing = true;
+    $('#processingOverlay').removeClass('hidden');
+    $('#otp').prop('disabled', true).addClass('otp-submitting'); // Disable input and show visual feedback
+
+    $.ajax({
+      url: "RegisterServlet",
+      type: "POST",
+      data: {
+        email: $('#email').val(),
+        password: $('#password').val(),
+        mobile: $('#mobile').val(),
+        confirmPassword: $('#confirmPassword').val(),
+        staffCode: $('#staffCode').val(),
+        otp: otp
+      },
+      success: function(response) {
+        $('#status').removeClass('text-danger').addClass('text-success').text("Registration successful! Redirecting to login...");
+        showToast("Success", "Staff registration successful! Redirecting to login page.");
+        
+        // Complete reset before redirecting
+        resetForm();
+        
+        setTimeout(() => {
+          window.location.href = "loginform.html";
+        }, 2000);
+      },
+      error: function(xhr) {
+        isProcessing = false;
+        $('#processingOverlay').addClass('hidden');
+        $('#otp').prop('disabled', false).removeClass('otp-submitting'); // Re-enable input
+        
+        // Get error message from response
+        let errorMessage = "Registration failed";
+        
+        try {
+          // Try to parse the response text
+          if (xhr.responseText) {
+            errorMessage = xhr.responseText;
+          }
+        } catch (e) {
+          console.error("Error parsing response:", e);
+        }
+        
+        // Special handling for invalid OTP
+        if (xhr.status === 400 && errorMessage.includes("Invalid OTP")) {
+          $('#status').removeClass('text-success').addClass('text-danger').text("Invalid OTP. Please try again.");
+          showToast("Invalid OTP", "The OTP you entered is incorrect. Please try again.", true);
+          // Clear OTP field but keep other form data
+          $('#otp').val('');
+          $('#otp').focus();
+          return;
+        }
+        
+        // Handle other errors
+        $('#status').removeClass('text-success').addClass('text-danger').text(errorMessage);
+        showToast("Registration Failed", errorMessage, true);
+        
+        // If it's a critical error, consider resetting the form
+        if (xhr.status === 403 || errorMessage.includes("staff code") || errorMessage.includes("Only staff")) {
+          resetForm();
+        }
+      },
+      complete: function() {
+        isProcessing = false;
+        $('#processingOverlay').addClass('hidden');
+        $('#otp').prop('disabled', false).removeClass('otp-submitting'); // Re-enable input
+      }
+    });
+  }
+
+  // Email validation with staff domain check
+  $('#email').on('blur', function() {
+    const email = $(this).val().trim();
+    
+    if (!email) {
+      $('#emailStatus').text('Email is required');
+      return;
+    }
+    
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      $('#emailStatus').text('Please enter a valid email address');
+      return;
+    }
+    
+    // Check if it's a staff email domain - matches domains in RegisterServlet.java
+    if (!email.toLowerCase().endsWith('@gopichandcollege.edu') && 
+        !email.toLowerCase().endsWith('@staff.gopichand.ac.in') && 
+        !email.toLowerCase().endsWith('@gopichand.ac.in') && 
+        !email.toLowerCase().endsWith('@gec.ac.in')) {
+      $('#emailStatus').text('Please use your official staff email address');
+    } else {
+      $('#emailStatus').text('');
+    }
+  });
+
+  $('#password').on('input', function () {
+    const password = $(this).val();
+    // Updated to match backend validation (8+ characters)
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$/;
+    
+    checkPasswordStrength(password);
+
+    if (pattern.test(password)) {
+      $('#status').text('');
+      $('#confirmPasswordGroup').removeClass('hidden');
+    } else {
+      if (password.length > 0) {
+        $('#status').text('Password must meet all requirements');
+      } else {
+        $('#status').text('');
+      }
+      $('#confirmPasswordGroup, #mobileGroup, #staffCodeGroup, #sendOtpBtn, #otpGroup, #signupBtn').addClass('hidden');
+    }
+  });
+
+  $('#confirmPassword').on('input', function () {
+    const pass = $('#password').val();
+    const conf = $(this).val();
+    if (pass === conf) {
+      $('#status').text('');
+      $('#mobileGroup').removeClass('hidden');
+    } else {
+      $('#status').text('Passwords do not match');
+      $('#mobileGroup, #staffCodeGroup, #sendOtpBtn, #otpGroup, #signupBtn').addClass('hidden');
+    }
+  });
+
+  $('#mobile').on('input', function () {
+    const mobile = $(this).val();
+    // Format: only allow numbers
+    $(this).val(mobile.replace(/[^0-9]/g, ''));
+    
+    if (/^[6-9]\d{9}$/.test(mobile)) {
+      $('#status').text('');
+      $('#staffCodeGroup').removeClass('hidden');
+    } else {
+      if (mobile.length > 0) {
+        $('#status').text('Please enter a valid 10-digit mobile number');
+      } else {
+        $('#status').text('');
+      }
+      $('#staffCodeGroup, #sendOtpBtn, #otpGroup, #signupBtn').addClass('hidden');
+    }
+  });
+
+  $('#staffCode').on('input', function() {
+    if ($(this).val().length > 0) {
+      $('#sendOtpBtn').removeClass('hidden');
+      $('#sendOtpBtn').prop('disabled', false);
+    } else {
+      $('#sendOtpBtn').addClass('hidden');
+      $('#sendOtpBtn').prop('disabled', true);
+    }
+  });
+
+  // Updated OTP input to auto-submit
+  $('#otp').on('input', function() {
+    // Only allow numeric input
+    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    
+    // Add animation feedback when typing
+    $(this).addClass('otp-highlight');
+    setTimeout(() => {
+      $(this).removeClass('otp-highlight');
+    }, 1000);
+    
+    // Auto-submit when 6 digits are entered
+    if ($(this).val().length === 6) {
+      // Show submitting state
+      $(this).addClass('otp-submitting');
+      
+      // Small delay to allow user to see the complete OTP they entered
+      setTimeout(function() {
+        submitForm();
+      }, 300);
+    }
+  });
+
+  $('#sendOtpBtn').click(function () {
+    const mobile = $('#mobile').val();
+    
+    if (!/^[6-9]\d{9}$/.test(mobile)) {
+      $('#status').removeClass('text-success').addClass('text-danger').text('Please enter a valid mobile number');
+      return;
+    }
+    
+    const email = $('#email').val();
+    const staffCode = $('#staffCode').val();
+    
+    if (!staffCode) {
+      $('#status').removeClass('text-success').addClass('text-danger').text('Please enter staff access code');
+      return;
+    }
+    
+    // Show loading state
+    $(this).prop('disabled', true).text('Sending...');
+    isProcessing = true;
+    
+    // Make AJAX request to send OTP
+    $.ajax({
+      url: "SignupOtpServlet",
+      type: "POST",
+      data: {
+        email: email,
+        mobile: mobile,
+        staffCode: staffCode,
+        action: "STAFF_SIGNUP"
+      },
+      success: function(response) {
+        // Start the OTP timer - increased to 120 seconds (2 minutes)
+        otpExpireTime = new Date().getTime() + (30 * 1000); // 2 minutes expiry
+        clearInterval(otpTimerInterval);
+        otpTimerInterval = setInterval(updateOtpTimer, 1000);
+        updateOtpTimer();
+        
+        // Show OTP input field and signup button
+        $('#otpGroup, #signupBtn').removeClass('hidden');
+        $('#status').removeClass('text-danger').addClass('text-success')
+                    .text('OTP sent successfully to your mobile number');
+        
+        showToast("OTP Sent", "A verification code has been sent to your mobile number");
+        
+        // Focus on OTP input
+        $('#otp').focus();
+      },
+      error: function(xhr) {
+        // Handle error
+        let errorMessage = "Failed to send OTP";
+        
+        try {
+          if (xhr.responseText) {
+            errorMessage = xhr.responseText;
+          }
+        } catch (e) {
+          console.error("Error parsing response:", e);
+        }
+        
+        $('#status').removeClass('text-success').addClass('text-danger').text(errorMessage);
+        showToast("Error", errorMessage, true);
+        
+        // Special handling for invalid staff code
+        if (xhr.status === 403 || errorMessage.includes("staff code")) {
+          $('#staffCode').val('').focus();
+        }
+      },
+      complete: function() {
+        // Reset button state
+        $('#sendOtpBtn').prop('disabled', false).text('Send OTP');
+        isProcessing = false;
+      }
+    });
+  });
+
+  // Handle form submission
+  $('#signupForm').submit(function(e) {
+    e.preventDefault();
+    submitForm();
+  });
+
+  // Resend OTP functionality
+  function resendOTP() {
+    if (isProcessing) return;
+    
+    clearInterval(otpTimerInterval);
+    $('#sendOtpBtn').click();
+  }
+
+  // Add event listener for Enter key in OTP field
+  $('#otp').on('keypress', function(e) {
+    if (e.which === 13) {
+      e.preventDefault();
+      submitForm();
+    }
+  });
+
+  // Initialize form
+  $(document).ready(function() {
+    resetForm();
+    
+    // Add resend OTP link
+    $('#otpTimer').after('<a href="#" id="resendOtpLink" class="text-white d-block mt-2">Resend OTP</a>');
+    $('#resendOtpLink').click(function(e) {
+      e.preventDefault();
+      resendOTP();
+    });
+    
+    // Show sign up button even with auto-submission (as fallback)
+    $('#signupForm').on('submit', function(e) {
+      e.preventDefault();
+      submitForm();
+    });
+  });
+</script>
+</body>
+</html>

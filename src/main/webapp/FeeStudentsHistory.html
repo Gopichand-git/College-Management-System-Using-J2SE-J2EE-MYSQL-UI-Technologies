@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All Students Payment History - Gopichand College</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        /* Hover effect for summary cards */
+        /* Apply uppercase transformation to all relevant fields */
+        #courseFilter,
+        #branchFilter,
+        #sectionFilter,
+        #paymentMethodFilter,
+        #dateRangeFilter,
+        #paymentsTableBody td,
+        #paymentsTableBody th {
+            text-transform: uppercase !important;
+            /* Force uppercase transformation */
+        }
+
+        /* Filter section styling */
+        .filter-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Ensure labels are bold */
+        .filter-section label {
+            font-weight: bold;
+        }
+
+        /* Adjust select/input font size */
+        .filter-section select,
+        .filter-section input {
+            font-size: 1rem;
+        }
+
+        /* Other styles remain unchanged */
+        .summary-card {
+            transition: transform 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .table-responsive {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .payment-method-cash {
+            background-color: #d1e7dd;
+        }
+
+        .payment-method-upi {
+            background-color: #cfe2ff;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar .bi-search {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #6c757d;
+        }
+
+        .search-bar input {
+            padding-left: 35px;
+        }
+
+        .header-buttons a {
+            margin-left: 10px;
+        }
+
+        .table th {
+            position: sticky;
+            top: 0;
+            background-color: #f8f9fa;
+            z-index: 1;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner-container {
+            text-align: center;
+        }
+
+        @media (max-width: 767px) {
+            .summary-card {
+                margin-bottom: 15px;
+            }
+
+            .filter-section .col-md-3,
+            .filter-section .col-md-2 {
+                margin-bottom: 10px;
+            }
+
+            .filter-section .col-md-2 {
+                flex: 1 0 50%;
+            }
+
+            .header-buttons a {
+                margin-left: 5px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .filter-section .col-md-3 {
+                flex: 1 0 50%;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner-container">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+            <p class="mt-2">Loading data...</p>
+        </div>
+    </div>
+
+    <div class="container-fluid py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>All Students Payment History</h2>
+            <div class="header-buttons">
+                <a href="FeePayment.html" class="btn btn-primary"><i class="bi bi-cash"></i> Make New Payment</a>
+                <a href="FeeSearch.html" class="btn btn-info"><i class="bi bi-person"></i> Individual Student
+                    History</a>
+                <button id="downloadPdfBtn" class="btn btn-success"><i class="bi bi-file-earmark-pdf"></i> Export
+                    Report</button>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card summary-card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Total Collected</h6>
+                                <h2 class="card-text">₹<span id="totalCollected">0</span></h2>
+                            </div>
+                            <i class="bi bi-cash-coin fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card summary-card bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Students with Full Payment</h6>
+                                <h2 class="card-text"><span id="fullPaidCount">0</span></h2>
+                            </div>
+                            <i class="bi bi-check-circle fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card summary-card bg-warning text-dark">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Students with Partial Payment</h6>
+                                <h2 class="card-text"><span id="partialPaidCount">0</span></h2>
+                            </div>
+                            <i class="bi bi-hourglass-split fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="courseFilter" class="form-label">Course</label>
+                    <select class="form-select" id="courseFilter">
+                        <option value="">All Courses</option>
+                        <option value="BTECH">BTECH</option>
+                        <option value="MTECH">MTECH</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="branchFilter" class="form-label">Branch</label>
+                    <select class="form-select" id="branchFilter">
+                        <option value="">All Branches</option>
+                        <option value="CSE">CSE</option>
+                        <option value="AIDS">AIDS</option>
+                        <option value="AIML">AIML</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EEE">EEE</option>
+                        <option value="MEC">MEC</option>
+                        <option value="CIVIL">CIVIL</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="sectionFilter" class="form-label">Section</label>
+                    <select class="form-select" id="sectionFilter">
+                        <option value="">All Sections</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="paymentMethodFilter" class="form-label">Payment Method</label>
+                    <select class="form-select" id="paymentMethodFilter">
+                        <option value="">All Methods</option>
+                        <option value="Cash">Cash</option>
+                        <option value="UPI">UPI</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="dateRangeFilter" class="form-label">Date Range</label>
+                    <input type="text" class="form-control" id="dateRangeFilter" readonly>
+                </div>
+            </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="search-bar">
+                <i class="bi bi-search"></i>
+                <input type="text" class="form-control" id="searchInput"
+                    placeholder="Search by Student ID, Name, or UPI Reference...">
+            </div>
+        </div>
+        <div class="col-md-6 text-end">
+            <button id="applyFiltersBtn" class="btn btn-primary"><i class="bi bi-funnel"></i> Apply Filters</button>
+            <button id="resetFiltersBtn" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Reset Filters</button>
+        </div>
+    </div>
+    </div>
+
+    <!-- Payment Records Table -->
+    <div class="card">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Payment Records</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover" id="paymentsTable">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Course</th>
+                            <th>Branch</th>
+                            <th>Section</th>
+                            <th>Payment Date</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Reference</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody">
+                        <!-- Payment records will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span id="recordCount">0</span> records found
+                </div>
+                <div>
+                    <button id="loadMoreBtn" class="btn btn-sm btn-outline-primary" style="display: none;">Load
+                        More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Payment Details Modal -->
+    <div class="modal fade" id="paymentDetailsModal" tabindex="-1" aria-labelledby="paymentDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentDetailsModalLabel">Payment Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Student Information</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p><strong>Student ID:</strong> <span id="modal_sid"></span></p>
+                                    <p><strong>Name:</strong> <span id="modal_name"></span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Course:</strong> <span id="modal_course"></span></p>
+                                    <p><strong>Branch:</strong> <span id="modal_branch"></span></p>
+                                </div>
+                            </div>
+                            <p><strong>Section:</strong> <span id="modal_section"></span></p>
+                            <p><strong>Total Fee:</strong> ₹<span id="modal_totalFee"></span></p>
+
+                            <hr>
+                            <h5 class="card-title mb-4">Payment Information</h5>
+                            <p><strong>Amount Paid:</strong> ₹<span id="modal_amount"></span></p>
+                            <p><strong>Payment Date:</strong> <span id="modal_date"></span></p>
+                            <p><strong>Payment Method:</strong> <span id="modal_method"></span></p>
+                            <p><strong>Reference:</strong> <span id="modal_ref"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="#" id="viewStudentHistoryBtn" class="btn btn-primary">View Student History</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        //Global variables
+        let allPayments = [];
+        let displayedPayments = [];
+        let pageSize = 50;
+        let currentPage = 0;
+
+        $(document).ready(function () {
+            // Initialize date range picker
+            $('#dateRangeFilter').daterangepicker({
+                opens: 'left',
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            $('#dateRangeFilter').on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            });
+
+            $('#dateRangeFilter').on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+
+            // Fetch all payment records initially (without filters)
+            fetchPayments();
+
+            // Event listeners for filters
+            $("#applyFiltersBtn").click(function () {
+                fetchPayments(true); // Fetch with filters
+            });
+
+            $("#resetFiltersBtn").click(function () {
+                resetFilters();
+            });
+
+            $("#searchInput").on("keyup", function (e) {
+                // Handle search separately since it's not sent to server
+                if (e.key === "Enter") {
+                    fetchPayments(true);
+                }
+            });
+
+            $("#loadMoreBtn").click(function () {
+                loadMorePayments();
+            });
+
+            $("#downloadPdfBtn").click(function () {
+                generatePDF();
+            });
+        });
+
+        function showLoading() {
+            $("#loadingOverlay").show();
+        }
+
+        function hideLoading() {
+            $("#loadingOverlay").hide();
+        }
+
+        function fetchPayments(withFilters = false) {
+            showLoading();
+
+            // Prepare data object for AJAX request
+            let requestData = {};
+
+            if (withFilters) {
+                // Get filter values
+                const course = $("#courseFilter").val();
+                const branch = $("#branchFilter").val();
+                const section = $("#sectionFilter").val();
+                const paymentMethod = $("#paymentMethodFilter").val();
+                const dateRange = $("#dateRangeFilter").val();
+                const searchText = $("#searchInput").val().trim().toLowerCase();
+
+                // Add filters to request if they're set
+                if (course) requestData.course = course;
+                if (branch) requestData.branch = branch;
+                if (section) requestData.section = section;
+                if (paymentMethod) requestData.paymentMethod = paymentMethod;
+
+                // Process date range for server format
+                if (dateRange) {
+                    const dates = dateRange.split(' - ');
+                    requestData.fromDate = dates[0]; // MM/DD/YYYY format
+                    requestData.toDate = dates[1];
+                }
+
+                // Handle search text - this will be applied client-side since it's across multiple fields
+                requestData.searchText = searchText;
+            }
+
+            $.ajax({
+                url: "AllStudentsPaymentHistoryServlet",
+                type: "GET",
+                data: requestData,
+                dataType: "json",
+                success: function (data) {
+                    console.log("Server response:", data);
+
+                    if (data.success === false) {
+                        showToast(data.error || "Error fetching data", "error");
+                        hideLoading();
+                        return;
+                    }
+
+                    // Transform data to match expected format
+                    const transformedPayments = [];
+
+                    // Check if payments array exists and has data
+                    if (data.payments && Array.isArray(data.payments) && data.payments.length > 0) {
+                        data.payments.forEach(payment => {
+                            transformedPayments.push({
+                                sid: payment.sid,
+                                name: payment.firstname + " " + payment.lastname,
+                                course: payment.course,
+                                branch: payment.branch,
+                                section: payment.section,
+                                date: payment.paymentDate,
+                                paidAmount: payment.paidAmount,
+                                method: payment.paymentMethod,
+                                upiRef: payment.upiReference || "N/A",
+                                totalFee: payment.totalFee
+                            });
+                        });
+                    }
+
+                    // Store all payments
+                    allPayments = transformedPayments;
+
+                    // Apply text search filter client-side if provided (since it's across multiple fields)
+                    let finalPayments = allPayments;
+                    if (requestData.searchText) {
+                        finalPayments = allPayments.filter(payment => {
+                            return payment.sid.toLowerCase().includes(requestData.searchText) ||
+                                payment.name.toLowerCase().includes(requestData.searchText) ||
+                                (payment.upiRef && payment.upiRef.toLowerCase().includes(requestData.searchText));
+                        });
+                    }
+
+                    // Create summary data from server response
+                    const summary = {
+                        totalCollected: 0,
+                        fullPaidCount: 0,
+                        partialPaidCount: 0
+                    };
+
+                    // Calculate summary from student summaries
+                    if (data.studentSummaries && Array.isArray(data.studentSummaries)) {
+                        data.studentSummaries.forEach(student => {
+                            summary.totalCollected += student.totalPaid;
+                            if (student.totalPaid >= student.totalFee) {
+                                summary.fullPaidCount++;
+                            } else if (student.totalPaid > 0) {
+                                summary.partialPaidCount++;
+                            }
+                        });
+                    }
+
+                    // Update summary
+                    updateSummary(summary);
+
+                    // Display payments
+                    displayPayments(finalPayments);
+
+                    // Show appropriate message
+                    if (finalPayments.length === 0) {
+                        showToast("No records found matching the filters", "info");
+                    } else if (withFilters) {
+                        showToast("Filters applied successfully", "success");
+                    } else {
+                        showToast("Payment records loaded successfully", "success");
+                    }
+
+                    hideLoading();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    console.error("Status:", status);
+                    console.error("Response:", xhr.responseText);
+
+                    showToast("Server error occurred. Please try again later.", "error");
+
+                    // Reset UI for better user experience
+                    allPayments = [];
+                    displayPayments([]);
+
+                    hideLoading();
+                }
+            });
+        }
+
+        function updateSummary(summary) {
+            $("#totalCollected").text(summary.totalCollected.toLocaleString('en-IN'));
+            $("#fullPaidCount").text(summary.fullPaidCount);
+            $("#partialPaidCount").text(summary.partialPaidCount);
+        }
+
+        function displayPayments(payments) {
+            // Clear table
+            $("#paymentsTableBody").empty();
+
+            // Reset pagination
+            currentPage = 0;
+            displayedPayments = payments;
+
+            // Display first page
+            displayPaymentPage();
+
+            // Update record count
+            $("#recordCount").text(payments.length);
+        }
+
+        function displayPaymentPage() {
+            const start = currentPage * pageSize;
+            const end = Math.min(start + pageSize, displayedPayments.length);
+            const paymentsToShow = displayedPayments.slice(start, end);
+
+            if (paymentsToShow.length === 0) {
+                $("#paymentsTableBody").html('<tr><td colspan="10" class="text-center py-3">No payment records found matching the filters.</td></tr>');
+                $("#loadMoreBtn").hide();
+                return;
+            }
+
+            paymentsToShow.forEach(function (payment) {
+                const methodClass = payment.method === 'Cash' ? 'payment-method-cash' : 'payment-method-upi';
+                const paymentDate = new Date(payment.date).toLocaleString();
+
+                const row = `
+      <tr>
+        <td>${payment.sid}</td>
+        <td>${payment.name}</td>
+        <td>${payment.course}</td>
+        <td>${payment.branch}</td>
+        <td>${payment.section}</td>
+        <td>${paymentDate}</td>
+        <td>₹${payment.paidAmount.toLocaleString('en-IN')}</td>
+        <td><span class="badge ${methodClass}">${payment.method}</span></td>
+        <td>${payment.upiRef && payment.upiRef !== 'N/A' ? payment.upiRef : '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary view-details" data-payment='${JSON.stringify(payment)}'>
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+
+                $("#paymentsTableBody").append(row);
+            });
+
+            // Show/hide load more button
+            if (end < displayedPayments.length) {
+                $("#loadMoreBtn").show();
+            } else {
+                $("#loadMoreBtn").hide();
+            }
+
+            // Add event listeners for view details buttons
+            $(".view-details").click(function () {
+                const payment = JSON.parse($(this).attr("data-payment"));
+                showPaymentDetails(payment);
+            });
+        }
+
+        function loadMorePayments() {
+            currentPage++;
+            displayPaymentPage();
+        }
+
+        function resetFilters() {
+            // Reset form fields
+            $("#courseFilter").val("");
+            $("#branchFilter").val("");
+            $("#sectionFilter").val("");
+            $("#paymentMethodFilter").val("");
+            $("#dateRangeFilter").val("");
+            $("#searchInput").val("");
+
+            // Fetch all records without filters
+            fetchPayments();
+
+            // Show toast
+            showToast("Filters have been reset", "success");
+        }
+
+        function showPaymentDetails(payment) {
+            // Populate modal with payment details
+            $("#modal_sid").text(payment.sid);
+            $("#modal_name").text(payment.name);
+            $("#modal_course").text(payment.course);
+            $("#modal_branch").text(payment.branch);
+            $("#modal_section").text(payment.section);
+            $("#modal_totalFee").text(payment.totalFee.toLocaleString('en-IN'));
+            $("#modal_amount").text(payment.paidAmount.toLocaleString('en-IN'));
+            $("#modal_date").text(new Date(payment.date).toLocaleString());
+            $("#modal_method").text(payment.method);
+            $("#modal_ref").text(payment.upiRef && payment.upiRef !== 'N/A' ? payment.upiRef : '-');
+
+            // Set link to view student history
+            $("#viewStudentHistoryBtn").attr("href", `FeeTransactionHistory.html?sid=${payment.sid}`);
+
+            // Show modal
+            new bootstrap.Modal(document.getElementById('paymentDetailsModal')).show();
+        }
+
+        function showToast(message, type) {
+            const bgColor = type === "error"
+                ? "linear-gradient(to right, #ff5f6d, #ffc3a0)"
+                : type === "info"
+                    ? "linear-gradient(to right, #2193b0, #6dd5ed)"
+                    : "linear-gradient(to right, #00b09b, #96c93d)";
+
+            Toastify({
+                text: message,
+                backgroundColor: bgColor,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right"
+            }).showToast();
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add title
+            doc.setFontSize(18);
+            doc.text("Gopichand College - Payment Records", 105, 15, null, null, "center");
+
+            // Add date
+            doc.setFontSize(10);
+            doc.text("Generated on: " + new Date().toLocaleString(), 105, 22, null, null, "center");
+
+            // Add filters applied
+            let filterText = "Filters: ";
+            const course = $("#courseFilter").val();
+            const branch = $("#branchFilter").val();
+            const section = $("#sectionFilter").val();
+            const method = $("#paymentMethodFilter").val();
+            const dateRange = $("#dateRangeFilter").val();
+            const searchText = $("#searchInput").val().trim();
+
+            if (course) filterText += "Course: " + course + ", ";
+            if (branch) filterText += "Branch: " + branch + ", ";
+            if (section) filterText += "Section: " + section + ", ";
+            if (method) filterText += "Method: " + method + ", ";
+            if (dateRange) filterText += "Date: " + dateRange + ", ";
+            if (searchText) filterText += "Search: " + searchText + ", ";
+
+            if (filterText !== "Filters: ") {
+                filterText = filterText.slice(0, -2); // Remove last comma and space
+                doc.text(filterText, 14, 30);
+            }
+
+            // Add summary information
+            doc.setFontSize(12);
+            doc.text("Summary Information", 14, 38);
+            doc.setFontSize(10);
+            doc.text("Total Collected: ₹" + $("#totalCollected").text(), 14, 44);
+            doc.text("Students with Full Payment: " + $("#fullPaidCount").text(), 14, 50);
+            doc.text("Students with Partial Payment: " + $("#partialPaidCount").text(), 14, 56);
+
+            // Prepare table data
+            const tableData = [];
+            const tableHeaders = ["Student ID", "Name", "Course", "Branch", "Section", "Date", "Amount", "Method", "Reference"];
+
+            // Add displayed payment records to table data
+            displayedPayments.forEach(function (payment) {
+                tableData.push([
+                    payment.sid,
+                    payment.name,
+                    payment.course,
+                    payment.branch,
+                    payment.section,
+                    new Date(payment.date).toLocaleDateString(),
+                    "₹" + payment.paidAmount.toLocaleString('en-IN'),
+                    payment.method,
+                    payment.upiRef && payment.upiRef !== 'N/A' ? payment.upiRef : '-'
+                ]);
+            });
+
+            // Generate table
+            doc.autoTable({
+                head: [tableHeaders],
+                body: tableData,
+                startY: 65,
+                styles: { fontSize: 8 },
+                headStyles: { fillColor: [41, 128, 185] },
+                alternateRowStyles: { fillColor: [240, 240, 240] }
+            });
+
+            // Add footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.text("Page " + i + " of " + pageCount, 105, doc.internal.pageSize.height - 10, null, null, "center");
+                doc.text("Gopichand College Fee Management System", 105, doc.internal.pageSize.height - 5, null, null, "center");
+            }
+
+            // Save the PDF
+            doc.save("Gopichand_College_Payment_Records_" + new Date().toISOString().slice(0, 10) + ".pdf");
+
+            // Show success toast
+            showToast("PDF has been generated successfully", "success");
+        }
+
+    </script>
+</body>
+
+</html>

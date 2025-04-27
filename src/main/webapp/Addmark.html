@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Student Marks</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Times New Roman', Times, serif;
+      background-color: rgb(13, 212, 212);
+    }
+
+    .header {
+      text-align: center;
+      color: rgb(3, 3, 3);
+      font-size: 2.4rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      margin-top: 20px;
+      font-family: 'Times New Roman', Times, serif;
+      background-color: rgb(215, 19, 19);
+    }
+
+    .form-card {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .form-card h2 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #333;
+    }
+
+    .btn-primary {
+      width: 100%;
+      font-weight: bold;
+      padding: 0.6rem;
+    }
+
+    #toastContainer {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 9999;
+    }
+
+    .subject-row {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b);
+      }
+      .form-card {
+        width: 100%;
+        padding: 1.5rem;
+      }
+      .btn-primary {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 1024px) {
+      body {
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+      }
+      .form-card {
+        width: 80%;
+        padding: 1.8rem;
+      }
+      .btn-primary {
+        font-size: 1rem;
+        padding: 0.7rem;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .form-card {
+        width: 60%;
+        padding: 2rem;
+      }
+      .btn-primary {
+        font-size: 1.1rem;
+        padding: 0.8rem;
+      }
+    }
+
+    img {
+      margin-top: 10px;
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    GOPICHAND ENGINEERING COLLEGE
+    <img src="luxurious-new-building-with-curb-appeal_1127-4448.avif" alt="College Building"/>
+  </div>
+
+  <div class="form-card">
+    <h2>Student Marks</h2>
+    <form id="addMarkForm">
+      <div class="mb-3">
+        <input class="form-control" type="text" name="sid" placeholder="Student ID" required>
+      </div>
+      <div class="mb-3">
+        <input class="form-control" type="text" name="name" placeholder="Student Name" required>
+      </div>
+      <div class="mb-3">
+        <input class="form-control" type="text" name="branch" placeholder="Branch" required>
+      </div>
+      <div class="mb-3">
+        <input class="form-control" type="text" name="section" placeholder="Section" required>
+      </div>
+      <div class="mb-3">
+        <input class="form-control" type="number" name="semester" placeholder="Semester" required>
+      </div>
+
+      <!-- Multiple Subjects Section -->
+      <div class="mb-3">
+        <label for="subject" class="form-label">Subjects</label>
+        <div id="subjectFields">
+          <div class="subject-row">
+            <input class="form-control mb-2" type="text" name="subject[]" placeholder="Subject Name" required>
+            <input class="form-control mb-2" type="number" name="marks[]" placeholder="Marks" required>
+            <input class="form-control mb-2" type="number" name="credits[]" placeholder="Credits" required>
+          </div>
+        </div>
+        <button type="button" id="addSubject" class="btn btn-secondary mt-2">Add Subject</button>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Add Marks</button>
+    </form>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Show toast
+    function showToast(message, success = true) {
+      const toastId = 'toast' + Date.now();
+      const toastHTML = `
+        <div id="${toastId}" class="toast align-items-center text-white bg-${success ? 'success' : 'danger'} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">${message}</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>`;
+      $('#toastContainer').append(toastHTML);
+      const toastElement = new bootstrap.Toast(document.getElementById(toastId));
+      toastElement.show();
+    }
+
+    // Add new subject fields
+    $('#addSubject').click(function() {
+      $('#subjectFields').append(`
+        <div class="subject-row">
+          <input class="form-control mb-2" type="text" name="subject[]" placeholder="Subject Name" required>
+          <input class="form-control mb-2" type="number" name="marks[]" placeholder="Marks" required>
+          <input class="form-control mb-2" type="number" name="credits[]" placeholder="Credits" required>
+        </div>
+      `);
+    });
+
+    // Handle form submit
+    $('#addMarkForm').submit(function(e) {
+      e.preventDefault();
+
+      $.post("AddMarksServlet", $(this).serialize(), function(response) {
+        console.log("Response from backend:", response);
+        const trimmed = response.trim().toLowerCase();
+
+        // Reset the form and subject fields
+        $('#addMarkForm')[0].reset();
+        $('#subjectFields').html(`
+          <div class="subject-row">
+            <input class="form-control mb-2" type="text" name="subject[]" placeholder="Subject Name" required>
+            <input class="form-control mb-2" type="number" name="marks[]" placeholder="Marks" required>
+            <input class="form-control mb-2" type="number" name="credits[]" placeholder="Credits" required>
+          </div>
+        `);
+
+        // Show toast based on response
+        if (trimmed === 'success') {
+          showToast("Marks added successfully!", true);
+        } else if (trimmed === 'failed') {
+          showToast("Marks addition failed. Please check the data and try again.", false);
+        } else {
+          showToast("Unexpected response: " + response, false);
+        }
+      }).fail(function() {
+        showToast("Server error. Please try again.", false);
+      });
+    });
+  </script>
+</body>
+</html>

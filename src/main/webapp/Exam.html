@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gopichand Engineering College - Examinations</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #123366;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #0056b3;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    section h2 {
+      margin-bottom: 15px;
+      color: #0056b3;
+      border-left: 5px solid #0056b3;
+      padding-left: 10px;
+      font-size: 24px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    ul li::before {
+      content: "✔️";
+      position: absolute;
+      left: 0;
+      color: #28a745;
+    }
+
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #0056b3;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      main {
+        padding: 15px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+
+      section h2 {
+        font-size: 20px;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        margin-bottom: 10px;
+      }
+
+      td::before {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+
+      td:nth-of-type(1)::before { content: "Exam Name"; }
+      td:nth-of-type(2)::before { content: "Date"; }
+      td:nth-of-type(3)::before { content: "Details"; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gopichand Engineering College - Examinations</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Upcoming Examinations</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Exam Name</th>
+            <th>Date</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mid Term Exams</td>
+            <td>15th April 2025</td>
+            <td>Covers Units 1-3</td>
+          </tr>
+          <tr>
+            <td>End Semester Exams</td>
+            <td>1st June 2025</td>
+            <td><a href="https://example.com/end-semester-syllabus.pdf" target="_blank">Full Syllabus</a></td>
+          </tr>
+          <tr>
+            <td>Backlog Exams</td>
+            <td>15th July 2025</td>
+            <td><a href="https://example.com/backlog-syllabus.pdf" target="_blank">Full Syllabus</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Examination Rules</h2>
+      <ul>
+        <li>Students must carry their college ID card and hall ticket.</li>
+        <li>Electronic devices like mobile phones, smartwatches are strictly prohibited.</li>
+        <li>Late entry beyond 30 minutes is not allowed.</li>
+        <li>Cheating or malpractice will result in disciplinary action.</li>
+        <li>Students must reach the examination hall 15 minutes before the exam starts.</li>
+        <li>Answer scripts must be handed over before leaving the hall.</li>
+        <li>Follow the instructions given by invigilators at all times.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

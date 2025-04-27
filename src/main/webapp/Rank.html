@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> Rank Cut Off</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .controls {
+      max-width: 1000px;
+      margin: auto;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .controls input,
+    .controls select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 200px;
+    }
+
+    .table-container {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    thead {
+      background-color: #007bff;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: center;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tbody tr:hover {
+      background-color: #f0f8ff;
+      transition: background-color 0.3s;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        font-weight: bold;
+        text-align: left;
+        color: #555;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gopichand Engineering College - Rank Cut Off</h1>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search branch or category..." onkeyup="filterTable()" />
+    <select id="categoryFilter" onchange="filterTable()">
+      <option value="">All Categories</option>
+      <option value="General">General</option>
+      <option value="OBC">OBC</option>
+      <option value="SC">SC</option>
+      <option value="ST">ST</option>
+      <option value="EWS">EWS</option>
+    </select>
+  </div>
+
+  <div class="table-container">
+    <table id="cutoffTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Branch ⬍</th>
+          <th onclick="sortTable(1)">Category ⬍</th>
+          <th onclick="sortTable(2)">Opening Rank ⬍</th>
+          <th onclick="sortTable(3)">Closing Rank ⬍</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-label="Branch">CSE</td><td data-label="Category">General</td><td data-label="Opening Rank">1500</td><td data-label="Closing Rank">4000</td></tr>
+        <tr><td data-label="Branch">AIDS</td><td data-label="Category">General</td><td data-label="Opening Rank">2500</td><td data-label="Closing Rank">5500</td></tr>
+        <tr><td data-label="Branch">AIML</td><td data-label="Category">General</td><td data-label="Opening Rank">2200</td><td data-label="Closing Rank">5200</td></tr>
+        <tr><td data-label="Branch">IT</td><td data-label="Category">General</td><td data-label="Opening Rank">1800</td><td data-label="Closing Rank">4500</td></tr>
+        <tr><td data-label="Branch">ECE</td><td data-label="Category">General</td><td data-label="Opening Rank">2000</td><td data-label="Closing Rank">4800</td></tr>
+        <tr><td data-label="Branch">EEE</td><td data-label="Category">General</td><td data-label="Opening Rank">3500</td><td data-label="Closing Rank">6000</td></tr>
+        <tr><td data-label="Branch">MEC</td><td data-label="Category">General</td><td data-label="Opening Rank">4000</td><td data-label="Closing Rank">7000</td></tr>
+        <tr><td data-label="Branch">Civil</td><td data-label="Category">General</td><td data-label="Opening Rank">4500</td><td data-label="Closing Rank">8000</td></tr>
+        <!-- OBC -->
+        <tr><td data-label="Branch">CSE</td><td data-label="Category">OBC</td><td data-label="Opening Rank">2000</td><td data-label="Closing Rank">5000</td></tr>
+        <tr><td data-label="Branch">AIDS</td><td data-label="Category">OBC</td><td data-label="Opening Rank">3000</td><td data-label="Closing Rank">6000</td></tr>
+        <tr><td data-label="Branch">AIML</td><td data-label="Category">OBC</td><td data-label="Opening Rank">2800</td><td data-label="Closing Rank">5800</td></tr>
+        <tr><td data-label="Branch">IT</td><td data-label="Category">OBC</td><td data-label="Opening Rank">2200</td><td data-label="Closing Rank">5200</td></tr>
+        <tr><td data-label="Branch">ECE</td><td data-label="Category">OBC</td><td data-label="Opening Rank">2500</td><td data-label="Closing Rank">5500</td></tr>
+        <tr><td data-label="Branch">EEE</td><td data-label="Category">OBC</td><td data-label="Opening Rank">3800</td><td data-label="Closing Rank">6500</td></tr>
+        <tr><td data-label="Branch">MEC</td><td data-label="Category">OBC</td><td data-label="Opening Rank">4500</td><td data-label="Closing Rank">7500</td></tr>
+        <tr><td data-label="Branch">Civil</td><td data-label="Category">OBC</td><td data-label="Opening Rank">5000</td><td data-label="Closing Rank">8500</td></tr>
+        <!-- Add SC, ST, EWS easily! -->
+        <tr><td data-label="Branch">CSE</td><td data-label="Category">SC</td><td data-label="Opening Rank">1200</td><td data-label="Closing Rank">5000</td></tr>
+        <tr><td data-label="Branch">AIDS</td><td data-label="Category">SC</td><td data-label="Opening Rank">1500</td><td data-label="Closing Rank">6000</td></tr>
+        <tr><td data-label="Branch">AIML</td><td data-label="Category">SC</td><td data-label="Opening Rank">1800</td><td data-label="Closing Rank">5800</td></tr>
+        <tr><td data-label="Branch">IT</td><td data-label="Category">SC</td><td data-label="Opening Rank">1200</td><td data-label="Closing Rank">5200</td></tr>
+        <tr><td data-label="Branch">ECE</td><td data-label="Category">SC</td><td data-label="Opening Rank">1500</td><td data-label="Closing Rank">5500</td></tr>
+        <tr><td data-label="Branch">EEE</td><td data-label="Category">SC</td><td data-label="Opening Rank">1800</td><td data-label="Closing Rank">6500</td></tr>
+        <tr><td data-label="Branch">MEC</td><td data-label="Category">SC</td><td data-label="Opening Rank">1500</td><td data-label="Closing Rank">7500</td></tr>
+        <tr><td data-label="Branch">Civil</td><td data-label="Category">SC</td><td data-label="Opening Rank">1000</td><td data-label="Closing Rank">8500</td></tr>
+
+        <tr><td data-label="Branch">CSE</td><td data-label="Category">ST</td><td data-label="Opening Rank">1100</td><td data-label="Closing Rank">5000</td></tr>
+        <tr><td data-label="Branch">AIDS</td><td data-label="Category">ST</td><td data-label="Opening Rank">1200</td><td data-label="Closing Rank">6000</td></tr>
+        <tr><td data-label="Branch">AIML</td><td data-label="Category">ST</td><td data-label="Opening Rank">1300</td><td data-label="Closing Rank">5800</td></tr>
+        <tr><td data-label="Branch">IT</td><td data-label="Category">ST</td><td data-label="Opening Rank">1200</td><td data-label="Closing Rank">5200</td></tr>
+        <tr><td data-label="Branch">ECE</td><td data-label="Category">ST</td><td data-label="Opening Rank">1000</td><td data-label="Closing Rank">5500</td></tr>
+        <tr><td data-label="Branch">EEE</td><td data-label="Category">ST</td><td data-label="Opening Rank">900</td><td data-label="Closing Rank">6500</td></tr>
+        <tr><td data-label="Branch">MEC</td><td data-label="Category">ST</td><td data-label="Opening Rank">1100</td><td data-label="Closing Rank">7500</td></tr>
+        <tr><td data-label="Branch">Civil</td><td data-label="Category">ST</td><td data-label="Opening Rank">1000</td><td data-label="Closing Rank">8500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function filterTable() {
+      const input = document.getElementById("searchInput").value.toUpperCase();
+      const categoryFilter = document.getElementById("categoryFilter").value.toUpperCase();
+      const table = document.getElementById("cutoffTable");
+      const tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+        const tds = tr[i].getElementsByTagName("td");
+        let match = false;
+
+        for (let j = 0; j < tds.length; j++) {
+          if (tds[j]) {
+            const txtValue = tds[j].textContent || tds[j].innerText;
+            if (txtValue.toUpperCase().indexOf(input) > -1) {
+              match = true;
+            }
+          }
+        }
+
+        const category = tds[1] ? tds[1].textContent.toUpperCase() : "";
+        if ((match || input === "") && (categoryFilter === "" || category === categoryFilter)) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+
+    function sortTable(n) {
+      const table = document.getElementById("cutoffTable");
+      let switching = true;
+      let dir = "asc";
+      let switchcount = 0;
+
+      while (switching) {
+        switching = false;
+        const rows = table.rows;
+
+        for (let i = 1; i < (rows.length - 1); i++) {
+          let shouldSwitch = false;
+          const x = rows[i].getElementsByTagName("TD")[n];
+          const y = rows[i + 1].getElementsByTagName("TD")[n];
+
+          if (dir === "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir === "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          switchcount++;
+        } else {
+          if (switchcount === 0 && dir === "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

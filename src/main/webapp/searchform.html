@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Search Form</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: #ffffff;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #0d6efd, #0b5ed7);
+            border: none;
+            border-radius: 12px;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #0b5ed7, #0a58ca);
+        }
+
+        .bi-search {
+            margin-right: 5px;
+        }
+
+        /* Toast container styles */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card p-4" style="width: 100%; max-width: 400px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">
+                <i class="bi bi-search"></i> Student Search
+            </h3>
+            <form id="searchForm">
+                <div class="mb-3">
+                    <label for="studentId" class="form-label">Student ID</label>
+                    <input type="text" class="form-control" id="studentId" name="sid" placeholder="e.g., S-111"
+                        required />
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                     <a href="College.jsp" class="btn btn-glass" style="background-color: #000000; margin-top: 10px; color: whitesmoke;">Back to Menu</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Message -->
+    <div class="toast-container">
+        <div id="msgToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">
+                    Student not found!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Handle form submission with AJAX
+            $('#searchForm').on('submit', function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: 'search.do',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        // If success, redirect to the student details page
+                        // Replace with your target page
+                        document.open();
+                        document.write(response);
+                        document.close();
+                        $('#searchForm')[0].reset();
+                    },
+                    error: function (xhr) {
+                        // If student not found, show toast message
+                        showToast('⚠️ Student not found! Please check the ID and try again.');
+                        $('#searchForm')[0].reset();
+                    }
+                });
+            });
+
+            // Function to display toast message
+            function showToast(message) {
+                const toastEl = $('#msgToast');
+                $('#toastMessage').text(message);
+                new bootstrap.Toast(toastEl[0]).show();
+
+                setTimeout(function () {
+                    toastEl.toast('hide');
+                }, 3000); // Hide toast after 3 seconds
+            }
+        });
+    </script>
+</body>
+
+</html>

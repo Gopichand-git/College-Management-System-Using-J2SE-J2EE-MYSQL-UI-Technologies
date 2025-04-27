@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Password Reset</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      position: relative;
+    }
+
+    .card {
+      border: none;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+      background-color: #ffffff;
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card .icon {
+      font-size: 70px;
+      margin-bottom: 20px;
+    }
+
+    .card h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      padding: 10px 25px;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1055;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div class="toast-container">
+    <div class="toast align-items-center text-bg-success border-0" id="successToast" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">✅ Password reset successfully!</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+
+    <div class="toast align-items-center text-bg-danger border-0" id="failToast" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">❌ Password reset failed!</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="card" id="statusCard">
+    <!-- Content will be injected by JavaScript -->
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Change this to false for failure view
+    const showSuccess = true;
+
+    const card = document.getElementById("statusCard");
+    const successCard = `
+      <i class="fas fa-check-circle icon text-success"></i>
+      <h1>Password Reset Successfully!</h1>
+      <p>Your password has been updated. You can now log in with your new credentials.</p>
+      <a href="loginform.html" class="btn btn-primary">Go to Login</a>
+    `;
+    const failCard = `
+      <i class="fas fa-times-circle icon text-danger"></i>
+      <h1>Password Reset Failed!</h1>
+      <p>Something went wrong. Please try again or contact support.</p>
+      <a href="loginform.html" class="btn btn-primary">Try Again</a>
+    `;
+
+    // Inject HTML and show appropriate toast
+    card.innerHTML = showSuccess ? successCard : failCard;
+    const toastEl = document.getElementById(showSuccess ? 'successToast' : 'failToast');
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+  </script>
+
+</body>
+</html>

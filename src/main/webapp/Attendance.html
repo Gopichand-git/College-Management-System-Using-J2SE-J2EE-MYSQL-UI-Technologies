@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mark Attendance - GOPICHAND ENGINEERING COLLEGE</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin-top: -22px;
+        }
+
+        .college-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.8rem;
+            border-radius: 0.5rem;
+        }
+        .college-logo {
+            width: 250px;
+            height: 190px;
+            position: absolute;
+            margin-top: -10px;
+            left: 10px;
+            border-radius: 8px;
+        }
+        #toastContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        h1 {
+            padding-top: 20px;
+            padding-bottom: 70px;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            margin-left: 150px;
+            color: black;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- College Title -->
+    <div class="container my-4 position-relative">
+      <div class="college-header">
+          <img src="Adobe Express - file (1).png" alt="College Logo" class="college-logo" />
+          <h1> GOPICHAND ENGINEERING COLLEGE</h1>
+      </div>
+  </div>
+
+    <!-- Attendance Form -->
+    <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title mb-4 text-center">Mark Attendance</h4>
+              
+                <form id="markAttendanceForm">  
+                 
+                  <div class="mb-3">
+                        <label for="subject" class="form-label">Select Subject</label>
+                        <input type="text" id="subject" class="form-control" required placeholder="Enter Subject Name">
+                  </div>
+                    
+
+                    <div class="mb-3">
+                        <label for="course" class="form-label">Select Course</label>
+                        <select class="form-select" id="course" required>
+                            <option value="">-- Select Course --</option>
+                            <option value="B.Tech">B.Tech</option>
+                            <option value="M.Tech">M.Tech</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="branchFilter" class="form-label">Select Branch</label>
+                        <select class="form-select" id="branchFilter" required>
+                            <option value="">-- Select Branch --</option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">AIDS</option>
+                            <option value="AIDS">AIML</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EEE</option>
+                            <option value="MEC">MEC</option>
+                            <option value="CIVIL">CIVIL</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="semester" class="form-label">Select Semester</label>
+                        <select class="form-select" id="semester" required>
+                            <option value="">-- Select Semester --</option>
+                            <option value="1">Semester 1</option>
+                            <option value="2">Semester 2</option>
+                            <option value="3">Semester 3</option>
+                            <option value="4">Semester 4</option>
+                            <option value="5">Semester 5</option>
+                            <option value="6">Semester 6</option>
+                            <option value="7">Semester 7</option>
+                            <option value="8">Semester 8</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="sectionFilter" class="form-label">Select Section</label>
+                        <select class="form-select" id="sectionFilter" required>
+                            <option value="">-- Select Section --</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="attendanceDate" class="form-label">Select Date</label>
+                        <input type="date" id="attendanceDate" class="form-control" required>
+                    </div>
+
+                    <div id="studentListContainer" class="mb-3"></div>
+
+                    <button type="submit" class="btn btn-primary w-100" id="submitBtn">Submit Attendance</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- JS -->
+    <script>
+    var today = new Date();
+	  var dd = String(today.getDate()).padStart(2, '0');
+	  var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+	  var yyyy = today.getFullYear();
+	  
+	  var todayFormatted = yyyy + '-' + mm + '-' + dd;
+	  $('#attendanceDate').val(todayFormatted);
+    $(document).ready(function() {
+        // Load students based on branch and section
+        $('#branchFilter, #sectionFilter').change(function() {
+            const branch = $('#branchFilter').val();
+            const section = $('#sectionFilter').val();
+            
+            // Clear previous student list if either branch or section is reset
+            if (!branch || !section) {
+                $('#studentListContainer').empty();
+                return;
+            }
+
+            // Show loading indicator
+            $('#studentListContainer').html('<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading students...</p></div>');
+            
+            $.ajax({
+                url: 'GetStudentsForAttendanceServlet',
+                type: 'GET',
+                data: { branch, section },
+                dataType: 'json',
+                success: function(students) {
+                    let html = '';
+
+                    if (students.length === 0) {
+                        html = '<div class="alert alert-info">No students found for selected branch and section.</div>';
+                    } else {
+                        html += `
+                            <div class="card mt-3 mb-3">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <span>Student List (${students.length} students)</span>
+                                    <div class="form-check mb-0">
+                                        <input class="form-check-input" type="checkbox" id="markAll">
+                                        <label class="form-check-label fw-bold" for="markAll">Mark All Present</label>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                        `;
+                        
+                        students.forEach((student, index) => {
+                            html += `
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input student-checkbox" type="checkbox" value="${student.sid}" id="attendance_${student.sid}">
+                                        <label class="form-check-label" for="attendance_${student.sid}">
+                                            ${student.name} - ${student.sid}
+                                        </label>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            // Add row divider every 2 items
+                            if ((index + 1) % 2 === 0 && (index + 1) < students.length) {
+                                html += '</div><div class="row">';
+                            }
+                        });
+                        
+                        html += `
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    $('#studentListContainer').html(html);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching students:', error);
+                    
+                    // Check if there's a response text
+                    let errorMessage = 'Error fetching students.';
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response && response.message) {
+                            errorMessage = response.message;
+                        }
+                    } catch (e) {
+                        // If parsing fails, use the error message
+                        errorMessage += ' ' + (error || '');
+                    }
+                    
+                    $('#studentListContainer').html(`
+                        <div class="alert alert-danger">
+                            <strong>Error:</strong> ${errorMessage}
+                            <button type="button" class="btn btn-sm btn-primary mt-2" id="retryFetch">Retry</button>
+                        </div>
+                    `);
+                    
+                    // Add retry functionality
+                    $('#retryFetch').click(function() {
+                        $('#branchFilter').trigger('change');
+                    });
+                }
+            });
+        });
+
+        // Toggle all checkboxes - SINGLE IMPLEMENTATION
+        $('#studentListContainer').on('change', '#markAll', function() {
+            const isChecked = $(this).is(':checked');
+            $('#studentListContainer .student-checkbox').prop('checked', isChecked);
+        });
+
+        // Handle form submission via AJAX
+        $('#markAttendanceForm').submit(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const selectedStudents = [];
+            $('#studentListContainer input.student-checkbox:checked').each(function() {
+                selectedStudents.push($(this).val());
+            });
+
+            const date = $('#attendanceDate').val();
+            const branch = $('#branchFilter').val();
+            const section = $('#sectionFilter').val();
+            const subject = $('#subject').val();
+            const semester = $('#semester').val();
+            const course = $('#course').val();
+          
+
+            if (!date || !branch || !section || !subject || !semester || !course ) {
+                showToast('Please fill all fields before submitting.', 'danger');
+                return;
+            }
+
+            if (selectedStudents.length === 0) {
+                showToast('Please select at least one student.', 'warning');
+                return;
+            }
+
+            const submitBtn = $('#submitBtn');
+            submitBtn.prop('disabled', true).text('Submitting...');
+
+            // Add loading indicator to the button
+            submitBtn.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Submitting...');
+
+            // Perform the AJAX POST request with proper data format
+            $.ajax({
+                url: 'MarkAttendanceServlet',
+                type: 'POST',
+                traditional: true, // Important for array parameter serialization
+                data: {
+                    'students[]': selectedStudents,
+                    date: date,
+                    branch: branch,
+                    section: section,
+                    subject: subject,
+                    semester: semester,
+                    course: course
+                   
+                },
+                success: function(response) {
+                    // Try to parse JSON response if it's a string
+                    if (typeof response === 'string') {
+                        try {
+                            response = JSON.parse(response);
+                        } catch (e) {
+                            console.warn('Response is not JSON:', response);
+                        }
+                    }
+                    
+                    showToast((response.message || 'Attendance Marked Successfully!'), 'success');
+                    $('#studentListContainer').html(''); // Clear the student list after submission
+                    $('#markAttendanceForm')[0].reset(); // Reset the form
+                    submitBtn.prop('disabled', false).html('Submit Attendance');
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error - Status:', status);
+                    console.error('AJAX Error - Response:', xhr.responseText);
+                    console.error('AJAX Error - Error:', error);
+                    
+                    let errorMsg = 'Error your entering Same Date Again ';
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response && response.message) {
+                            errorMsg = response.message;
+                        }
+                    } catch (e) {
+                        errorMsg += ': ' + error;
+                    }
+                    
+                    showToast(errorMsg, 'danger');
+                    submitBtn.prop('disabled', false).html('Submit Attendance');
+                }
+            });
+        });
+    });
+
+    // Show Toast Notifications
+    function showToast(message, type = 'success') {
+        const toastId = 'toast' + Date.now();
+        const toastHtml = `
+            <div id="${toastId}" class="toast align-items-center text-bg-${type} border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`;
+        $('#toastContainer').append(toastHtml);
+        
+        // Auto-dismiss toast after delay
+        setTimeout(function() {
+            $(`#${toastId}`).fadeOut('slow', function() {
+                $(this).remove();
+            });
+        }, 4000);
+        
+        // Also make the close button functional
+        $(`#${toastId} .btn-close`).on('click', function() {
+            $(`#${toastId}`).fadeOut('slow', function() {
+                $(this).remove();
+            });
+        });
+    }
+    </script>
+</body>
+
+</html>

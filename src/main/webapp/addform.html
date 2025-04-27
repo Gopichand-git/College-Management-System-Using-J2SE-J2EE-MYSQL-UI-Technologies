@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap & jQuery CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin-top: 20px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, #141e30, #243b55);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 768px) {
+            .glass-form {
+                padding: 25px;
+            }
+
+            .form-title {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .glass-form {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            .form-title {
+                font-size: 22px;
+            }
+
+            .form-check-label {
+                display: block;
+                margin-right: 0;
+            }
+
+            .form-check-inline {
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+
+
+        .glass-form {
+            width: 100%;
+            max-width: 750px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-form label {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .glass-form input,
+        .glass-form select {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: #fff;
+        }
+
+        .glass-form input::placeholder {
+            color: #151212;
+        }
+
+        .glass-form input:focus,
+        .glass-form select:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glass {
+            background-color: #00c9ff;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            transition: 0.3s;
+            border-radius: 10px;
+        }
+
+        .btn-glass:hover {
+            background-color: #92fe9d;
+            color: #000;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .form-check-label {
+            margin-right: 15px;
+        }
+
+        option {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glass-form">
+        <div class="form-title">Student Registration</div>
+
+        <form id="registerForm">
+            <div class="mb-3">
+                <label for="sid">Student ID</label>
+                <input type="text" name="sid" class="form-control" id="sid" required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="sfname">First Name</label>
+                    <input type="text" name="sfname" class="form-control" id="sfname" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="slname">Last Name</label>
+                    <input type="text" name="slname" class="form-control" id="slname" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="saddr">Address</label>
+                <input type="text" name="saddr" class="form-control" id="saddr" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Gender</label><br>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sgender" value="Male" required>
+                    <label class="form-check-label">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sgender" value="Female">
+                    <label class="form-check-label">Female</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="semail">Email</label>
+                <input type="email" name="semail" class="form-control" id="semail" required>
+                <small class="form-text">Format: example@gmail.com</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="smobile">Mobile</label>
+                <input type="text" name="smobile" class="form-control" id="smobile" required pattern="^\d{10}$"
+                    title="Enter a valid 10-digit mobile number">
+                <small class="form-text">Must be exactly 10 digits</small>
+            </div>
+
+            <!-- New Fields -->
+            <div class="row">
+                <!-- Father's Details -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="father_name">Father Name</label>
+                        <input type="text" name="father_name" class="form-control" id="father_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="father_mobile">Father Mobile</label>
+                        <input type="text" name="father_mobile" class="form-control" id="father_mobile" required
+                            pattern="^\d{10}$" title="Enter a valid 10-digit mobile number">
+                    </div>
+                </div>
+
+                <!-- Mother's Details -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="mother_name">Mother Name</label>
+                        <input type="text" name="mother_name" class="form-control" id="mother_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mother_mobile">Mother Mobile</label>
+                        <input type="text" name="mother_mobile" class="form-control" id="mother_mobile" required
+                            pattern="^\d{10}$" title="Enter a valid 10-digit mobile number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="scourse">Course</label>
+                <select name="scourse" class="form-select" id="scourse" required>
+                    <option disabled selected>Select Course</option>
+                    <option value="BTECH">B.TECH</option>
+                    <option value="MTECH">M.TECH</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Branch</label><br>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="CSE" required>
+                    <label class="form-check-label">CSE</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="AIDS">
+                    <label class="form-check-label">AIDS</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="AIML">
+                    <label class="form-check-label">AIML</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="IT">
+                    <label class="form-check-label">IT</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="ECE">
+                    <label class="form-check-label">ECE</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="EEE">
+                    <label class="form-check-label">EEE</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="MEC">
+                    <label class="form-check-label">MEC</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="sbranch" value="CIVIL">
+                    <label class="form-check-label">CIVIL</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="section">Section</label>
+                <select name="section" class="form-select" id="section">
+                    <option disabled selected>Select Section</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="fee">Fee</label>
+                <input type="text" name="fee" class="form-control" id="fee">
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="city">City</label>
+                    <input type="text" name="scity" class="form-control" id="city" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="pin">Pin Code</label>
+                    <input type="text" name="spin" class="form-control" id="pin" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="state">State</label>
+                <input type="text" name="state" class="form-control" id="state" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="join">Joining Date</label>
+                <input type="text" name="joining" class="form-control" id="join" placeholder="YYYY-MM-DD" required>
+                <small class="form-text">Format: YYYY-MM-DD (e.g., 2025-04-23)</small>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a href="College.jsp" class="btn btn-glass" style="background-color: #4a6fa5;">Back to Menu</a>
+                <button type="submit" class="btn btn-glass">Register</button>
+              
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast Message -->
+    <div class="toast-container">
+        <div id="msgToast" class="toast align-items-center text-white border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">Message</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery AJAX -->
+    <script>
+        $(document).ready(function () {
+            // Set fee to 65000
+            $('#fee').val('65000');
+
+            // Form validation and submission
+            $('#registerForm').on('submit', function (e) {
+                e.preventDefault();
+
+                // Validate email
+                const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                const email = $('#semail').val();
+                if (!emailPattern.test(email)) {
+                    showToast('⚠️ Please enter a valid email address', false);
+                    $('#semail').focus();
+                    return;
+                }
+
+                // Validate mobile (10 digits)
+                const mobilePattern = /^\d{10}$/;
+                const mobile = $('#smobile').val();
+                if (!mobilePattern.test(mobile)) {
+                    showToast('⚠️ Please enter a valid 10-digit mobile number', false);
+                    $('#smobile').focus();
+                    return;
+                }
+
+                const fatherMobile = $('#father_mobile').val();
+                if (!mobilePattern.test(fatherMobile)) {
+                    showToast('⚠️ Please enter a valid 10-digit mobile number for father', false);
+                    $('#father_mobile').focus();
+                    return;
+                }
+
+                const motherMobile = $('#mother_mobile').val();
+                if (!mobilePattern.test(motherMobile)) {
+                    showToast('⚠️ Please enter a valid 10-digit mobile number for mother', false);
+                    $('#mother_mobile').focus();
+                    return;
+                }
+
+                // Validate date format (YYYY-MM-DD)
+                const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+                const joinDate = $('#join').val();
+                if (!datePattern.test(joinDate)) {
+                    showToast('⚠️ Please enter date in YYYY-MM-DD format', false);
+                    $('#join').focus();
+                    return;
+                }
+
+                $.ajax({
+                    url: 'add.do',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response === "success") {
+                            showToast('🎉 Registration Successful!', true);
+                            $('#registerForm')[0].reset();
+                            // Re-apply default values after form reset
+                            $('#fee').val('65000');
+                        } else {
+                            showToast('❌ Failed to Register. Try again!', false);
+                        }
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 409) {
+                            showToast('⚠️ Student ID already exists. Please use a different ID.', false);
+                        } else if (xhr.status === 400) {
+                            showToast('⚠️ ' + xhr.responseText, false);
+                        } else {
+                            showToast('❌ Failed to Register. Try again!', false);
+                        }
+                    }
+                });
+            });
+
+            function showToast(message, success) {
+                const toastEl = $('#msgToast');
+                $('#toastMessage').text(message);
+
+                // Set appropriate background color
+                toastEl.removeClass('bg-success bg-danger bg-warning');
+
+                if (success) {
+                    toastEl.addClass('bg-success');
+                    $('#toastMessage').css('color', '#fff');
+                } else if (message.includes('⚠️')) {
+                    toastEl.addClass('bg-warning');
+                    $('#toastMessage').css('color', '#000'); // Dark text for warning background
+                } else {
+                    toastEl.addClass('bg-danger');
+                    $('#toastMessage').css('color', '#fff');
+                }
+
+                new bootstrap.Toast(toastEl[0]).show();
+
+                setTimeout(function () {
+                    toastEl.toast('hide');
+                }, 4000); // Hide toast after 4 seconds
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OTP Verification - GEC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .header-title {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #ffffff;
+      text-align: center;
+      font-size: 50px;
+      font-weight: bold;
+      padding: 15px 0;
+      z-index: 1000;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    .otp-wrapper {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(40px);
+      padding: 0 15px;
+    }
+
+    .otp-card {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 40px 30px 80px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .otp-card h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #030303;
+      font-weight: bold;
+    }
+
+    .otp-card p {
+      text-align: center;
+      color: #030303;
+      margin-bottom: 25px;
+    }
+
+    .form-floating label {
+      color: #000000;
+    }
+
+    .form-floating .form-control:focus ~ label,
+    .form-floating .form-control:not(:placeholder-shown) ~ label {
+      color: #072ac6;
+      transform: scale(0.9) translateY(-1.5rem) translateX(0.2rem);
+    }
+
+    .btn-success {
+      background-color: #03a9f4;
+      border-color: #03a9f4;
+    }
+
+    .btn-success:hover {
+      background-color: #0288d1;
+      border-color: #0288d1;
+    }
+
+    /* OTP input fields */
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .otp-inputs input {
+      width: 50px;
+      height: 60px;
+      text-align: center;
+      font-size: 24px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .otp-inputs input:focus {
+      border-color: #03a9f4;
+      box-shadow: 0 0 0 0.2rem rgba(3, 169, 244, 0.25);
+      outline: none;
+    }
+
+    #errorBox, #successBox {
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+      font-weight: bold;
+      color: rgb(248, 21, 21);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.897);
+      z-index: 10;
+    }
+
+    .alert-danger {
+      border: none !important;
+      color: #ff2929;
+      box-shadow: none;
+    }
+
+    .alert-success {
+      border: none !important;
+      color: #69f0ae;
+      box-shadow: none;
+    }
+
+    .spinner-border {
+      display: none;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .verify-btn-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .resend-otp {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .resend-otp a {
+      color: #4e0ff0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .resend-otp a:hover {
+      text-decoration: underline;
+    }
+
+    #countdown {
+      color: #030303;
+      font-weight: bold;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .header-title {
+        font-size: 30px;
+        padding: 10px 0;
+      }
+      
+      .otp-card {
+        padding: 30px 20px 70px;
+        max-width: 100%;
+      }
+      
+      .otp-wrapper {
+        padding-top: 80px;
+      }
+
+      .otp-inputs input {
+        width: 40px;
+        height: 50px;
+        font-size: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 24px;
+        padding: 8px 0;
+      }
+      
+      .otp-card {
+        padding: 20px 15px 60px;
+      }
+      
+      .otp-card h2 {
+        margin-bottom: 20px;
+      }
+
+      .otp-inputs input {
+        width: 35px;
+        height: 45px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-title">
+    GOPICHAND ENGINEERING COLLEGE
+  </div>
+
+  <div class="otp-wrapper pt-5">
+    <div class="otp-card mt-5">
+      <h2>OTP Verification</h2>
+      <p>We've sent a verification code to your mobile number: <br><strong id="mobileDisplay">******</strong></p>
+      
+      <form id="otpForm" method="post">
+        <!-- OTP Input -->
+        <div class="otp-inputs">
+          <input type="text" maxlength="1" id="otp1" class="otp-input" autofocus>
+          <input type="text" maxlength="1" id="otp2" class="otp-input">
+          <input type="text" maxlength="1" id="otp3" class="otp-input">
+          <input type="text" maxlength="1" id="otp4" class="otp-input">
+          <input type="text" maxlength="1" id="otp5" class="otp-input">
+          <input type="text" maxlength="1" id="otp6" class="otp-input">
+        </div>
+
+        <input type="hidden" id="fullOtp" name="otp">
+        <input type="hidden" id="email" name="email">
+
+        <!-- Alerts -->
+        <div class="alert alert-danger text-center" id="errorBox" role="alert"></div>
+        <div class="alert alert-success text-center" id="successBox" role="alert">Verification successful!</div> 
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-success" id="verifyBtn">
+            <span class="verify-btn-content">
+              <span>Verify OTP</span>
+              <div class="spinner-border spinner-border-sm text-light" role="status" id="loadingSpinner"></div>
+            </span>
+          </button>
+        </div>
+
+        <!-- Resend OTP -->
+        <div class="resend-otp">
+          <p>Didn't receive the code? <span id="countdown">60s</span></p>
+          <a id="resendLink" style="display: none;">Resend OTP</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function () {
+    // Display masked mobile number from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+    const mobile = urlParams.get('mobile');
+    
+    // Set email in hidden field
+    $('#email').val(email);
+    
+    // Format the mobile number for display (mask middle digits)
+    if (mobile) {
+      const maskedMobile = mobile.substring(0, 3) + "****" + mobile.substring(7);
+      $('#mobileDisplay').text(maskedMobile);
+    } else {
+      $('#mobileDisplay').text("Your registered mobile");
+    }
+
+    // OTP input handling - advance to next input on entry
+    $('.otp-input').on('input', function() {
+      const maxLength = 1;
+      if(this.value.length >= maxLength) {
+        // Move to next input field
+        $(this).next('.otp-input').focus();
+      }
+      
+      // Combine all inputs to hidden field
+      combineOtp();
+      
+      // Auto-submit if all digits are entered
+      if ($('#fullOtp').val().length === 6) {
+        $("#otpForm").submit();
+      }
+    });
+
+    // Handle backspace key - move to previous input
+    $('.otp-input').on('keydown', function(e) {
+      // If backspace is pressed and field is empty
+      if(e.keyCode === 8 && this.value === '') {
+        // Move focus to previous input
+        $(this).prev('.otp-input').focus();
+      }
+    });
+
+    // Function to combine individual OTP digits into a single value
+    function combineOtp() {
+      let otp = '';
+      $('.otp-input').each(function() {
+        otp += $(this).val();
+      });
+      $('#fullOtp').val(otp);
+    }
+
+    // Allow only numbers in OTP fields
+    $('.otp-input').on('keypress', function(e) {
+      const charCode = (e.which) ? e.which : e.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+    });
+
+    // Paste event handling for OTP
+    $('.otp-input').on('paste', function(e) {
+      e.preventDefault();
+      const pastedData = (e.originalEvent.clipboardData || window.clipboardData).getData('text');
+      
+      // If pasted content looks like an OTP (digits only)
+      if (/^\d+$/.test(pastedData)) {
+        const otpDigits = pastedData.substring(0, 6).split('');
+        
+        // Fill each input field with corresponding digit
+        $('.otp-input').each(function(index) {
+          if (index < otpDigits.length) {
+            $(this).val(otpDigits[index]);
+          }
+        });
+        
+        // Update the hidden combined OTP field
+        combineOtp();
+        
+        // Auto-submit if all 6 digits were pasted
+        if (pastedData.length >= 6) {
+          $("#otpForm").submit();
+        }
+      }
+    });
+
+    // Countdown timer for resend OTP
+    let countdown = 60;
+    const countdownTimer = setInterval(() => {
+      countdown--;
+      $('#countdown').text(countdown + 's');
+      
+      // When countdown reaches zero
+      if (countdown <= 0) {
+        clearInterval(countdownTimer);
+        $('#countdown').parent().hide();
+        $('#resendLink').show();
+      }
+    }, 1000);
+
+    // Resend OTP button handler
+    $('#resendLink').click(function() {
+      $('#resendLink').hide();
+      $('#loadingSpinner').show();
+      
+      // Make sure we have the email before sending request
+      const emailToSend = $('#email').val();
+      if (!emailToSend) {
+        $('#errorBox').text("Email not found. Please reload the page.").fadeIn();
+        setTimeout(() => {
+          $('#errorBox').fadeOut();
+        }, 3000);
+        $('#resendLink').show();
+        $('#loadingSpinner').hide();
+        return;
+      }
+      
+      $.ajax({
+        url: "SendOtpServlet",
+        method: "POST",
+        data: { email: emailToSend },
+        success: function(response) {
+          $('#loadingSpinner').hide();
+          
+          if (response.trim() === "success") {
+            $('#successBox').text("OTP resent successfully!").fadeIn();
+            setTimeout(() => {
+              $('#successBox').fadeOut();
+            }, 3000);
+            
+            // Reset countdown
+            countdown = 60;
+            $('#countdown').text(countdown + 's');
+            $('#countdown').parent().show();
+            
+            // Restart countdown
+            const newCountdownTimer = setInterval(() => {
+              countdown--;
+              $('#countdown').text(countdown + 's');
+              
+              if (countdown <= 0) {
+                clearInterval(newCountdownTimer);
+                $('#countdown').parent().hide();
+                $('#resendLink').show();
+              }
+            }, 1000);
+            
+            // Clear OTP fields
+            $('.otp-input').val('');
+            $('#fullOtp').val('');
+            $('#otp1').focus();
+          } else {
+            $('#errorBox').text("Failed to resend OTP. Please try again.").fadeIn();
+            setTimeout(() => {
+              $('#errorBox').fadeOut();
+            }, 3000);
+            $('#resendLink').show();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX Error:", status, error);
+          $('#loadingSpinner').hide();
+          $('#errorBox').text("Server error. Please try again later.").fadeIn();
+          setTimeout(() => {
+            $('#errorBox').fadeOut();
+          }, 3000);
+          $('#resendLink').show();
+        }
+      });
+    });
+
+    // Form submission for OTP verification
+    $("#otpForm").submit(function(e) {
+      e.preventDefault();
+      $("#errorBox, #successBox").hide();
+      $("#loadingSpinner").show();
+      $("#verifyBtn").prop("disabled", true);
+
+      const otp = $("#fullOtp").val();
+      const emailToVerify = $("#email").val();
+      
+      // Validate OTP length
+      if (otp.length !== 6) {
+        $("#errorBox").text("Please enter all 6 digits").fadeIn();
+        setTimeout(() => {
+          $("#errorBox").fadeOut();
+        }, 3000);
+        $("#loadingSpinner").hide();
+        $("#verifyBtn").prop("disabled", false);
+        return;
+      }
+
+      // Send OTP verification request
+      $.ajax({
+        url: "VerifyLoginOtpServlet",
+        method: "POST",
+        data: { 
+          email: emailToVerify,
+          otp: otp 
+        },
+        success: function(response) {
+          $("#loadingSpinner").hide();
+          $("#verifyBtn").prop("disabled", false);
+          
+          console.log("Server response:", response);
+          
+          if (response.trim() === "success") {
+            // OTP verified successfully - redirect immediately to College.jsp
+            window.location.href = "College.jsp";
+          } else if (response.trim() === "expired") {
+            // OTP has expired
+            $("#errorBox").text("OTP has expired. Please request a new one.").fadeIn();
+            setTimeout(() => {
+              $("#errorBox").fadeOut();
+            }, 3000);
+            // Reset OTP fields
+            $(".otp-input").val("");
+            $("#fullOtp").val("");
+            $("#otp1").focus();
+            // Show resend link immediately
+            $('#countdown').parent().hide();
+            $('#resendLink').show();
+          } else {
+            // Invalid OTP
+            $("#errorBox").text("Invalid OTP. Please try again.").fadeIn();
+            setTimeout(() => {
+              $("#errorBox").fadeOut();
+            }, 3000);
+            // Clear OTP fields
+            $(".otp-input").val("");
+            $("#fullOtp").val("");
+            $("#otp1").focus();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX Error:", status, error);
+          $("#loadingSpinner").hide();
+          $("#verifyBtn").prop("disabled", false);
+          $("#errorBox").text("Server error. Please try again later.").fadeIn();
+          setTimeout(() => {
+            $("#errorBox").fadeOut();
+          }, 3000);
+        }
+      });
+    });
+
+    // Focus on first input field on page load
+    $('#otp1').focus();
+    
+    // Prevent back button functionality
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL);
+    });
+  });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

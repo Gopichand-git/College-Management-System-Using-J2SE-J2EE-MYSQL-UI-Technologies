@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student List</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+  <style>
+    #customSearch {
+      width: 100%;
+      border: 2px solid #007bff;
+      border-radius: 5px;
+      padding: 8px 10px;
+      margin-bottom: 15px;
+    }
+    div.dataTables_filter {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <h3 class="mb-3">All Students List <span class="badge bg-primary" id="studentCount">0</span></h3>
+
+  <!-- Filters -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label for="filterCourse" class="form-label">Course</label>
+      <select id="filterCourse" class="form-select">
+        <option value="">All</option>
+        <option value="BTECH">B.TECH</option>
+        <option value="MTECH">M.TECH</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="filterBranch" class="form-label">Branch</label>
+      <select id="filterBranch" class="form-select">
+        <option value="">All</option>
+        <option value="CSE">CSE</option>
+        <option value="AIDS">AIDS</option>
+        <option value="AIML">AIML</option>
+        <option value="ECE">ECE</option>
+        <option value="IT">IT</option>
+        <option value="EEE">EEE</option>
+        <option value="MEC">MEC</option>
+        <option value="CIVIL">CIVIL</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="filterSection" class="form-label">Section</label>
+      <select id="filterSection" class="form-select">
+        <option value="">All</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Custom Search -->
+  <input type="text" id="customSearch" placeholder="Search by sid or name....">
+
+  <!-- Table -->
+  <table id="studentTable" class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>FIRST Name</th>
+        <th>LAST NAME</th>
+        <th>COURSE</th>
+        <th>BRANCH</th>
+        <th>SECTION</th>
+      </tr>
+    </thead>
+    <tbody id="studentTableBody"></tbody>
+  </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
+<script>
+  let allStudents = [];
+  let dataTable;
+
+  function renderTable(students) {
+    const tableBody = $('#studentTableBody');
+    tableBody.empty();
+    students.forEach(s => {
+      tableBody.append(`<tr>
+        <td>${s.id}</td>
+        <td>${s.firstname}</td>
+        <td>${s.lastname}</td>
+        <td>${s.course}</td>
+        <td>${s.branch}</td>
+        <td>${s.section}</td>
+      </tr>`);
+    });
+
+    if ($.fn.dataTable.isDataTable('#studentTable')) {
+      dataTable.destroy();
+    }
+
+    dataTable = $('#studentTable').DataTable({
+      dom: 'Bfrtip',
+      buttons: ['copy', 'excel', 'pdf', 'print'],
+      searching: true,
+      paging: true,
+      ordering: true
+    });
+    
+    // Connect custom search box to DataTable search
+    $('#customSearch').val('');
+    $('#customSearch').off('keyup').on('keyup', function() {
+      dataTable.search(this.value).draw();
+    });
+  }
+
+  function fetchStudents() {
+    const course = $('#filterCourse').val() || '';
+    const branch = $('#filterBranch').val() || '';
+    const section = $('#filterSection').val() || '';
+    
+    console.log("Sending filters to server:", { course, branch, section });
+    
+    $.ajax({
+      url: 'StudentServlet',
+      method: 'GET',
+      data: {
+        course: course,
+        branch: branch,
+        section: section
+      },
+      dataType: 'json',
+      success: function(data) {
+        console.log("Received data:", data);
+        allStudents = data;
+        $('#studentCount').text(data.length);
+        renderTable(data);
+      },
+      error: function(err) {
+        console.error('Error:', err);
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    // Initial data load
+    fetchStudents();
+
+    // Filter change event handlers
+    $('#filterCourse, #filterBranch, #filterSection').on('change', function () {
+      fetchStudents();
+    });
+  });
+</script>
+</body>
+</html>

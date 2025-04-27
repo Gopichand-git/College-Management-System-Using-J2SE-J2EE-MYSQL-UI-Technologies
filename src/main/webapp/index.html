@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GOPICHAND ENGINEERING COLLEGE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="ChatGPT Image Apr 21, 2025, 09_56_18 AM.png">
+
+
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
+    window.addEventListener('pageshow', event => {
+      if (event.persisted) window.scrollTo(0, 0);
+    });
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0958a3d6;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ------------------------------------------------MARQUEE--------------------------------- */
+    .notification-container {
+      width: 100%;
+      height: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .notification-bar {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #faf209, #fbff04);
+      display: flex;
+      align-items: center;
+
+    }
+
+    .notification-label {
+      color: rgb(227, 10, 10);
+      font-weight: bold;
+      font-size: 20px;
+      padding: 0 15px;
+      font-family: 'Times New Roman', Times, serif;
+      z-index: 2;
+      min-width: 120px;
+      border: 1px solid black;
+      padding: 2px;
+      margin-left: 10px;
+      background: black;
+      animation: blinkColors 1s infinite;
+    }
+
+    @keyframes blinkColors {
+      0% {
+        color: red;
+      }
+
+      25% {
+        color: orange;
+      }
+
+      50% {
+        color: yellow;
+      }
+
+      75% {
+        color: rgb(25, 63, 253);
+      }
+
+      100% {
+        color: cyan;
+      }
+    }
+
+    .marquee-wrapper {
+      flex-grow: 1;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    /* This creates the actual marquee animation */
+    .marquee {
+      position: absolute;
+      white-space: nowrap;
+      will-change: transform;
+      animation: marquee 40s linear infinite;
+      color: rgb(6, 5, 5);
+      font-weight: bold;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(100%);
+      }
+
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    .yellow-corner {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0px 50px 40px 0;
+      border-color: transparent #ff2814 transparent transparent;
+    }
+
+    /* .corner-left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-top: 50px solid red;
+      border-right: 40px solid transparent;
+  
+    } */
+
+
+    /* -------------------------------------------------------HEADER--------------------------------------- */
+
+    .ig3 {
+      padding-top: 0px;
+      width: 100%;
+      margin-bottom: -5px;
+      margin-top: 1px;
+
+    }
+
+    /* ---------------------------------------------------NAVBAR---------------------------------------------- */
+    nav {
+      background-color: #0958a3d6;
+      font-size: 21px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-family: 'Times New Roman', Times, serif;
+      padding: 0 15px;
+      position: relative;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 1px;
+
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      position: relative;
+      padding: 10px;
+    }
+
+    nav a:hover {
+      background-color: hsl(15, 100%, 42%);
+      border-radius: 5px;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #0f3264;
+      min-width: 220px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #092144;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .hamburger {
+      display: flex;
+      /* Set to flex for mobile */
+      flex-direction: column;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1000;
+      position: absolute;
+      right: 5px;
+      top: 8px;
+      border: 1px solid white;
+      /* << this adds the border around the 3 lines */
+      border-radius: 4px;
+      /* optional: gives a slightly rounded look */
+      background-color: black
+      /* optional: keep background clean */
+    }
+
+    .hamburger div {
+      width: 20px;
+      height: 3px;
+      background-color: white;
+      margin: 4px;
+      transition: 0.4s;
+    }
+
+    /* ---------------------------------------------------------------------SLIDE IMAGES--------------------------------------------- */
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      overflow: hidden;
+      /* margin-top: -29px; */
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 1s ease-out;
+      height: 100%;
+    }
+
+    .slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.6);
+      border: none;
+      font-size: 2.5em;
+      cursor: pointer;
+      padding: 10px 15px;
+      z-index: 10;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+
+    /* Program Section */
+    .program-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      padding: 0 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .program {
+      background: #defbff;
+      border-radius: 12px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      margin-bottom: 28px;
+    }
+
+    .program:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 18px rgba(0, 0, 0, 0.15);
+      color: rgb(13, 13, 224);
+    }
+
+    .program i {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .program-title {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .program-subtitle {
+      color: #555;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    /* Statistics Section */
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      padding: 40px 20px;
+      background-color: #0958a3d6;
+      box-shadow: #0958a3d6;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      background-color: #faffff;
+      width: 200px;
+      margin-bottom: 15px;
+    }
+
+    .stat-box i {
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: #060505;
+    }
+
+    .counter {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0c0cf0;
+    }
+
+    .p1 {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: #0a0a0a;
+    }
+
+    /* Cards Section */
+    .container-2 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 30px auto;
+      max-width: 1200px;
+    }
+
+    .card-2 {
+      width: 500px;
+      height: 500px;
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-header {
+      padding: 12px;
+      font-weight: bold;
+      color: white;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .exam-header {
+      background-color: #d32f2f;
+    }
+
+    .placements-header {
+      background-color: #002d62;
+    }
+
+    .card-content {
+      height: 360px;
+      padding: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scrolling-content {
+      display: inline-block;
+      white-space: normal;
+      animation: scrollUp 20s linear infinite;
+    }
+
+    @keyframes scrollUp {
+      0% {
+        transform: translateY(100%);
+      }
+
+      100% {
+        transform: translateY(-100%);
+      }
+    }
+
+    /* Carousel Section */
+    .carousel-container {
+      overflow: hidden;
+      position: relative;
+      margin: 40px 0;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 40px;
+      animation: scroll-left 30s linear infinite;
+    }
+
+    .carousel-track.reverse {
+      animation: scroll-right 30s linear infinite;
+    }
+
+    .carousel-track img {
+      height: 100px;
+      width: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: white;
+      padding: 10px;
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    @keyframes scroll-right {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    /*-----------------------------------------------------------Footer----------------------------------------------------------------- */
+    .footer-1 {
+      background-color: #222;
+      color: white;
+      padding: 50px 0;
+      text-align: center;
+    }
+
+    .container-1 {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 0 20px;
+    }
+
+    .column-1 {
+      flex: 1;
+      min-width: 250px;
+      padding: 20px;
+      margin-right: 30px;
+    }
+
+    .column-2 {
+      flex: 1;
+      min-width: 250px;
+      padding: 20px;
+      margin-right: 30px;
+    }
+
+
+    h2 {
+      font-size: 20px;
+      border-bottom: 2px solid #fff;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    #un {
+      list-style: none;
+      padding: 0;
+    }
+
+    #un .il {
+      margin: 10px 0;
+      display: inline;
+    }
+
+    #un .il a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    #un .il a:hover {
+      color: #00aced;
+    }
+
+    .contact-1 p,
+    .contact-1 a {
+      color: white;
+      text-decoration: none;
+    }
+
+    #contact {
+      margin-top: 15px;
+    }
+
+
+    .footer-bottom-1 {
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    /* New social media icon styles */
+    .social-icons-1 {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin: 30px 0;
+
+    }
+
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      margin: 2px 4px;
+      color: rgb(251, 249, 249);
+      font-size: 18px;
+      text-decoration: none;
+      transition: .5s ease;
+      margin-left: 20px;
+      border: .2rem solid transparent;
+      ;
+      border-radius: 50%;
+      background: black;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.1);
+      opacity: 0.8;
+      width: 45px;
+      background: rgb(7, 235, 228);
+      color: rgb(35, 15, 251);
+      box-shadow: 0 0 2rem rgb(255, 6, 31);
+      filter: drop-shadow(0 0 10px rgb(251, 5, 5));
+    }
+
+    .youtube-1 {
+      background-color: #FF0000;
+    }
+
+    .facebook-1 {
+      background-color: #1877F2;
+    }
+
+    .instagram-1 {
+      background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    }
+
+    .twitter-1 {
+      background-color: #000000;
+    }
+
+    .linkedin-1 {
+      background-color: #0A66C2;
+    }
+
+    .social-icon i {
+      color: white;
+      font-size: 20px;
+    }
+
+    /* ------------------------------------------------------------------------Social Bar----------------------------------------------- */
+    .social-bar {
+      position: absolute;
+      top: 60%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 1000;
+    }
+
+    .social-bar a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 5px 0px;
+      color: rgb(251, 249, 249);
+      font-size: 18px;
+      text-decoration: none;
+      transition: .5s ease;
+      margin-left: 15px;
+      border: .2rem solid transparent;
+      ;
+      border-radius: 50%;
+      background: black;
+    }
+
+    .social-bar a:hover {
+      opacity: 0.8;
+      width: 45px;
+      background: rgb(7, 235, 228);
+      color: rgb(35, 15, 251);
+      box-shadow: 0 0 2rem rgb(255, 6, 31);
+      filter: drop-shadow(0 0 10px rgb(251, 5, 5));
+    }
+
+    .facebook {
+      background: #3b5998;
+    }
+
+    .twitter {
+      background: #1da1f2;
+    }
+
+    .linkedin {
+      background: #0077b5;
+    }
+
+    .youtube {
+      background: #ff0000;
+    }
+
+
+    /*------------------------------------------------------------ Enquire Now Tab----------------------------------------------------- */
+    @keyframes blinkColors {
+      0% {
+        color: red;
+      }
+
+      25% {
+        color: orange;
+      }
+
+      50% {
+        color: yellow;
+      }
+
+      75% {
+        color: green;
+      }
+
+      100% {
+        color: red;
+      }
+    }
+
+    .enquire-now-tab {
+      position: absolute;
+      top: 60%;
+      right: -90px;
+      background-color: #010101;
+      color: red;
+      padding: 10px 20px;
+      font-weight: bold;
+      transform: rotate(-90deg);
+      cursor: pointer;
+      z-index: 9999;
+      text-decoration: none;
+      font-size: 25px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      animation: blinkColors 1s infinite;
+    }
+
+    .enquire-now-tab:hover {
+      color: blue;
+      animation: none;
+      /* Stop animation on hover */
+    }
+
+    .enquire-now-tab::before {
+      content: ' →  ';
+      font-size: 25px;
+      margin-left: 5px;
+      font-weight: bold;
+    }
+
+
+
+    /* Side Panel Styling */
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100%;
+      background-color: #f8f8f8;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      transition: right 0.4s ease;
+      z-index: 10000;
+      overflow-y: auto;
+    }
+
+    .side-panel.open {
+      right: 0;
+    }
+
+    .side-panel h2 {
+      margin-top: 0;
+      color: #b22222;
+    }
+
+    .close-btn-1 {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 20px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #b22222;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #8b1a1a;
+    }
+
+    /* Popups and Overlays */
+    .overlay {
+      display: none;
+      /* Initially hidden */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 30px;
+    }
+
+    .pledge-container {
+      position: relative;
+      background: linear-gradient(to bottom right, #3e3b28, #231f20);
+      width: 90%;
+      max-width: 700px;
+      border: 8px solid rgb(16, 15, 15);
+      padding: 40px 30px;
+      box-shadow: 0 0 20px #000;
+      color: white;
+      text-align: center;
+      animation: slideDown 0.8s ease;
+      height: 400px;
+    }
+
+    .pledge-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+    .pledge-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .pledge-title {
+      font-size: 2.2rem;
+      color: white;
+      text-shadow: 0 0 10px red, 0 0 20px red;
+      margin-bottom: 20px;
+    }
+
+    .pledge-text {
+      font-size: 1.5rem;
+      color: white;
+      line-height: 1.6;
+      text-shadow: 0 0 5px red;
+    }
+
+    .pledge-text strong {
+      color: #ff4b5c;
+      text-shadow: 0 0 10px red, 0 0 20px red;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 2;
+      border-radius: 4px;
+      box-shadow: 0 0 10px red;
+    }
+
+    .close-btn:hover {
+      background: darkred;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+
+    /*       POPUP-2     */
+    .popup-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup {
+      background: #1c1c48;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      animation: slideInLeft 0.7s ease;
+      color: whitesmoke;
+      margin: 0 auto;
+    }
+
+    .popup.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .popup h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #fff4f4;
+    }
+
+    .popup .un-1 {
+      text-align: left;
+      padding-left: 20px;
+      margin-bottom: 15px;
+      text-decoration: none;
+    }
+
+    .un-1 .li-1 {
+      text-decoration: none;
+    }
+
+    .popup p {
+      margin-bottom: 15px;
+      color: #e8e8e8;
+    }
+
+    .popup-buttons {
+      display: flex;
+      justify-content: space-around;
+      gap: 10px;
+    }
+
+    .popup-btn {
+      text-decoration: none;
+      background: #f0f0f0;
+      color: #333;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background 0.3s;
+      font-weight: bold;
+    }
+
+    .popup-btn.primary {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .popup-btn:hover {
+      background: #ddd;
+    }
+
+    .popup-btn.primary:hover {
+      background: #45a049;
+    }
+
+    .close-button {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      z-index: 2;
+      border-radius: 4px;
+      box-shadow: 0 0 10px red;
+    }
+
+    .close-button:hover {
+      background: darkred;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    #ug {
+      border: 2px solid rgb(242, 236, 236);
+      margin: 0 auto;
+      padding: 10px;
+      background-color: black;
+      color: whitesmoke;
+      text-align: center;
+      max-width: 600px;
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+
+    .program-title a {
+      text-decoration: none;
+      color: black;
+    }
+
+    /* Device Type Labels */
+    .device-type-label {
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 10px 15px;
+      color: white;
+      font-size: 16px;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+    }
+
+    .mobile-label,
+    .tablet-label,
+    .laptop-label {
+      display: none;
+    }
+
+    /* Responsive Breakpoints */
+    /* Mobile Devices (up to 767px) */
+    @media screen and (max-width: 767px) {
+      .mobile-label {
+        display: block;
+        background-color: #e91e63;
+      }
+
+      /* Navigation for Mobile */
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        background-color: #0f3264;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 100;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      nav {
+        padding: 15px;
+        position: relative;
+      }
+
+      nav a {
+        margin: 5px 0;
+        padding: 12px;
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+
+      .dropdown-content {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        background-color: #06193a;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: none;
+      }
+
+      .dropdown.open .dropdown-content {
+        display: block;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      /* Program Cards for Mobile */
+      .program-container {
+        grid-template-columns: 1fr;
+        padding: 0 10px;
+      }
+
+      .program {
+        padding: 15px;
+      }
+
+      /* Stats for Mobile */
+      .stats {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+      }
+
+      .stat-box {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      /* Cards for Mobile */
+      .container-2 {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10px;
+      }
+
+      .card-2 {
+        width: 100%;
+        height: 400px;
+        margin-bottom: 20px;
+      }
+
+      /* Slider for Mobile */
+      .slider {
+        height: 40vh;
+      }
+
+      .nav {
+        font-size: 1.5em;
+        padding: 5px 10px;
+      }
+
+      /* Social Bar for Mobile */
+      .social-bar {
+        position: fixed;
+        top: auto;
+        bottom: 70px;
+        left: 0;
+        right: 0;
+        transform: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .social-bar a {
+        margin: 0 5px;
+      }
+
+      /* Enquire Now for Mobile */
+      .enquire-now-tab {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        transform: none;
+        text-align: center;
+        border-radius: 0;
+      }
+
+      /* Side Panel for Mobile */
+      .side-panel {
+        width: 85%;
+      }
+
+      /* Footer for Mobile */
+      .footer .container {
+        flex-direction: column;
+      }
+
+      .column {
+        width: 100%;
+        padding: 10px 0;
+      }
+
+      /* Popup for Mobile */
+      .popup {
+        width: 85%;
+        padding: 20px;
+      }
+
+      .pledge-container {
+        padding: 20px;
+        height: auto;
+      }
+
+      .pledge-title {
+        font-size: 1.5rem;
+      }
+
+      .pledge-text {
+        font-size: 1.1rem;
+      }
+
+      /* Fix image in header */
+      .ig3 {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      /* Fix carousel on mobile */
+      .carousel-track img {
+        height: 60px;
+      }
+    }
+
+    /* Tablet Devices (768px to 1023px) */
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      .tablet-label {
+        display: block;
+        background-color: #2196f3;
+      }
+
+      /* Navigation for Tablet */
+      nav {
+        font-size: 18px;
+        padding: 10px;
+      }
+
+      /* Program Cards for Tablet */
+      .program-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Cards for Tablet */
+      .container-2 {
+        justify-content: center;
+      }
+
+      .card-2 {
+        width: 450px;
+      }
+
+      /* Stats for Tablet */
+      .stats {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .stat-box {
+        flex: 0 0 45%;
+        margin: 10px;
+      }
+
+      /* Footer for Tablet */
+      .column {
+        min-width: 45%;
+      }
+
+      /* Fix image in header */
+      .ig3 {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    /* Laptop/Desktop Devices (1024px and above) */
+    @media screen and (min-width: 1024px) {
+      .laptop-label {
+        display: block;
+        background-color: #4caf50;
+      }
+
+      /* Everything else is already styled for desktop in the base styles */
+      .program-container {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .container-2 {
+        justify-content: center;
+        max-width: 1200px;
+        margin: 30px auto;
+      }
+
+      .nav-links {
+        display: flex !important;
+        flex-direction: row;
+      }
+
+      .hamburger {
+        display: none;
+      }
+    }
+
+    #c1 {
+      border: 2px solid rgb(242, 236, 236);
+      margin: 0 auto;
+      padding: 10px;
+      background-color: black;
+      color: whitesmoke;
+      text-align: center;
+      max-width: 600px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+  </style>
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    function toggleDropdown(event) {
+      event.currentTarget.classList.toggle('open');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const slides = document.querySelectorAll('.slide');
+      let currentSlide = 0;
+      setInterval(nextSlide, 3000);
+
+      function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }
+    });
+
+    const programs = document.querySelectorAll('.program');
+    programs.forEach(program => {
+      program.addEventListener('click', () => {
+        if (window.innerWidth <= 600) {
+          program.classList.toggle('open');
+        }
+      });
+    });
+
+
+
+    function closePopup2() {
+      document.querySelector('.popup-container').style.display = 'none';
+      sessionStorage.setItem('popupShown', 'true');
+    }
+
+    window.addEventListener('load', function () {
+      if (!sessionStorage.getItem('popupShown')) {
+        setTimeout(function () {
+          document.querySelector('.popup-container').style.display = 'flex';
+        }, 11000);
+      }
+    });
+
+  </script>
+
+</head>
+
+<body>
+
+  <div class="notification-container">
+    <div class="notification-bar">
+      <div class="notification-label">Notifications</div>
+      <div class="marquee-wrapper">
+        <div class="marquee"> 🆕 Latest News Admissions Reminder: Course 🎓 registration for Fall 2025 begins on April
+          10th! ⚠️ IMPORTANT ANNOUNCEMENT: System maintenance scheduled for Friday, April 25. Please save all work by 5
+          PM. Contact IT department for further details. ⚠️</div>
+      </div>
+      <div class="yellow-corner"></div>
+      <div class="corner-left"></div>
+    </div>
+  </div>
+
+  <script>
+    // This ensures the marquee animation is clearly visible by adding multiple copies
+    document.addEventListener('DOMContentLoaded', function () {
+      const marquee = document.querySelector('.marquee');
+      const text = marquee.innerHTML;
+
+      // Duplicate the text a few times to ensure continuous scrolling
+      marquee.innerHTML = text + ' &nbsp;&nbsp;&nbsp; ' + text + ' &nbsp;&nbsp;&nbsp; ' + text;
+
+      // Start the animation after a small delay to ensure proper rendering
+      setTimeout(() => {
+        marquee.style.visibility = 'visible';
+      }, 10);
+    });
+  </script>
+
+
+  <!-------------------------------------------------------------------HEADER---------------------------------------------------------- -->
+  <img src="Untitled design-Picsart-AiImageEnhancer.png" class="ig3" height="175px" width="1600px">
+
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+
+  <div class="device-type-label">
+    <span class="mobile-label"></span>
+    <span class="tablet-label"></span>
+    <span class="laptop-label"></span>
+  </div>
+
+
+  <div class="overlay" id="pledgePopup">
+    <div class="pledge-container">
+      <button class="close-btn" onclick="closePopup1()"></button>
+      <div class="pledge-content">
+        <div class="pledge-title">25 Years of Excellence</div>
+        <div class="pledge-text">
+          "<strong>🎉 Celebrating 25 Glorious Years of Excellence in Education 🎉</strong> As we proudly celebrate the
+          25th Anniversary of our college, we reflect on a journey marked by academic excellence, innovation, and
+          holistic development. Since our establishment in [25 Years], we have been committed to nurturing young minds,
+          empowering futures, and contributing to nation-building.
+        </div>
+        <img src="Adobe Express - file.png" id="i1" height="180" width="280">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function closePopup1() {
+      document.getElementById('pledgePopup').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      sessionStorage.setItem('popupClosed', 'true');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const popup = document.getElementById('pledgePopup');
+
+      if (sessionStorage.getItem('popupClosed') !== 'true') {
+        popup.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        // Auto-close after 5 seconds (5000 ms)
+        setTimeout(() => {
+          closePopup1();
+        }, 5000);
+      }
+    });
+  </script>
+
+
+  <div class="popup-container" id="popup-container" style="display: none;">
+    <div class="popup">
+      <span class="close-button" onclick="closePopup2()">✖</span>
+      <h2>🎓 Welcome to Gopichand Engineering College</h2>
+      <ul class="un-1">
+        <li class="li-1">✅ Top Ranked Engineering Institution</li><br>
+        <li class="li-1">✅ State-of-the-art Infrastructure</li><br>
+        <li class="li-1">✅ Highly Experienced Faculty Members</li><br>
+        <li class="li-1">✅ 100% Placement Assistance</li><br>
+        <li class="li-1">✅ Modern Labs & Research Centers</li><br>
+      </ul>
+      <p>Curriculum designed in collaboration with leading industries:</p>
+      <ul class="un-1">
+        <li>🌐 Google</li><br>
+        <li>🛒 Amazon</li><br>
+        <li>🏛️ IIT Alumni Network</li>
+      </ul>
+      <p>🔔 <strong>Admissions Open for 2025-26!</strong></p>
+      <div class="popup-buttons">
+        <a href="Explore.html" class="popup-btn">Explore Courses</a>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-links" id="navLinks">
+      <a href="hom.html">HOME</a>
+      <a href="abt.html">ABOUT GEC</a>
+      <a href="why.html">WHY GEC?</a>
+      <div class="dropdown" onclick="toggleDropdown(event)">
+        <a href="javascript:void(0);">ACADEMICS ▼</a>
+        <div class="dropdown-content">
+          <a href="Dept.html" style="font-size: 18px;">Departments</a>
+          <a href="syllabus.html" style="font-size: 18px;">Syllabus</a>
+          <a href="Exam.html" style="font-size: 18px;">Examinations</a>
+          <a href="Rules.html" style="font-size: 18px;">Rules - Regulations</a>
+        </div>
+      </div>
+      <div class="dropdown" onclick="toggleDropdown(event)">
+        <a href="javascript:void(0);">ADMISSIONS ▼</a>
+        <div class="dropdown-content">
+          <a href="programmes.html" style="font-size: 18px;">Programmes Offered</a>
+          <a href="Admission.html" style="font-size: 18px;">Admission Procedure</a>
+          <a href="intake-fee.html" style="font-size: 18px;">Intake - Fee Details</a>
+          <a href="Onlinefee.html" style="font-size: 18px;">Online Fee-Payment</a>
+          <a href="Rank.html" style="font-size: 18px;">Rank Cut-off Details</a>
+        </div>
+      </div>
+      <div class="dropdown" onclick="toggleDropdown(event)">
+        <a href="javascript:void(0);">PLACEMENTS ▼</a>
+        <div class="dropdown-content">
+          <a href="Companies.html" style="font-size: 18px;">Companies</a>
+          <a href="Training.html" style="font-size: 18px;">Training Programs</a>
+          <a href="Placement.html" style="font-size: 18px;">Placement Statistics</a>
+          <a href="Assessment.html" style="font-size: 18px;">Assessment Partners</a>
+        </div>
+      </div>
+      <a href="Facilities.html">FACILITIES</a>
+      <!-- <a href="#">GALLERY</a> -->
+      <a href="Contact.html">CONTACT</a>
+      <a href="loginform.html" style=" background-color: red; ">LOGIN</a>
+    </div>
+  </nav>
+
+
+
+
+  <!-- ----------------------------------------------ENQUIRY NOW------------------------------------------------------------------------ -->
+  <!-- Enquire Now Button -->
+  <div class="enquire-now-tab" onclick="openPanel()">Enquire Now</div>
+
+  <!-- Side Panel -->
+  <div class="side-panel" id="enquiryPanel">
+    <span class="close-btn-1" onclick="closePanel()">×</span>
+    <h2>Enquiry Form</h2>
+    <form id="enquiryForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Mobile Number</label>
+        <input type="tel" id="phone" name="phone" required />
+      </div>
+
+      <div class="form-group">
+        <label for="course">Interested Course</label>
+        <select id="course" name="course" required>
+          <option value="">-- Select --</option>
+          <option value="CSE">CSE</option>
+          <option value="AIDS">AIDS</option>
+          <option value="AIML">AIML</option>
+          <option value="IT">IT</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="MECH">Mechanical</option>
+          <option value="CIVIL">Civil</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="3"></textarea>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const panel = document.getElementById('enquiryPanel');
+
+    function openPanel() {
+      panel.classList.add('open');
+    }
+
+    function closePanel() {
+      panel.classList.remove('open');
+    }
+
+    // Handle form submission
+    document.getElementById('enquiryForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Your enquiry has been submitted!');
+      closePanel();
+      this.reset();
+    });
+
+    // Auto-close when clicking outside the panel
+    document.addEventListener('click', function (event) {
+      const isClickInside = panel.contains(event.target) || event.target.classList.contains('enquire-now-tab');
+      if (!isClickInside) {
+        closePanel();
+      }
+    });
+  </script>
+
+
+  <!-- -----------------------------------------------------SLIDE IMAGES----------------------------------------------- -->
+  <div class="slider">
+    <button class="nav prev">&#10094;</button>
+    <div class="slides">
+      <div class="slide">
+        <img src="ChatGPT Image Apr 21, 2025, 09_56_18 AM.png" alt="Apple Can">
+      </div>
+      <div class="slide">
+        <img src="mills_hero-3.jpg" alt="Pear Can">
+      </div>
+      <div class="slide">
+        <img src="luxurious-new-building-with-curb-appeal_1127-4448.avif" alt="Pear Can">
+      </div>
+      <div class="slide">
+        <img src="computer-lab.jpg" alt="Pear Can">
+      </div>
+      <div class="slide">
+        <img src="pngtree-stack-of-books-in-a-library-with-blurred-bookshelves-background-picture-image_15759373.jpg"
+          alt="Pear Can">
+      </div>
+      <div class="slide">
+        <img src="pngtree-rare-view-portrait-a-group-of-university-students-at-their-graduation-image_16248882.jpg"
+          alt="Pear Can">
+      </div>
+      <div class="slide">
+        <img src="college-background-4ucekkclp0tepcan.jpg" alt="Pear Can">
+      </div>
+      <div class="slide">
+        <img src="1520162031766.jpg" alt="Pear Can">
+      </div>
+    </div>
+    <button class="nav next">&#10095;</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script>
+    const slides = document.querySelector('.slides');
+    const slideItems = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let current = 0;
+
+    function showSlide(index) {
+      gsap.to(slides, {
+        x: `-${index * 100}vw`,  // Move slides horizontally
+        duration: 1.3,            // Smooth transition duration
+        ease: "power3.out",       // Ease effect for smoother transition
+      });
+    }
+
+    function animateSlide() {
+      gsap.timeline()
+        .to(slides, { y: "-10px", duration: 2 }) // Slide up for 2 seconds
+        .to(slides, { y: "10px", duration: 2 })  // Slide down for 2 seconds
+        .to(slides, { x: `-${current * 100}vw`, duration: 2, ease: "power3.out" }) // Move right slowly
+        .to(slides, { y: "0px", duration: 2 }); // Reset to center position after the move
+    }
+
+    prevBtn.addEventListener('click', () => {
+      current = (current === 0) ? slideItems.length - 1 : current - 1;
+      showSlide(current);
+      animateSlide(); // Animate the slide after showing the new slide
+    });
+
+    nextBtn.addEventListener('click', () => {
+      current = (current === slideItems.length - 1) ? 0 : current + 1;
+      showSlide(current);
+      animateSlide(); // Animate the slide after showing the new slide
+    });
+
+    // Autoplay functionality with animation
+    setInterval(() => {
+      current = (current === slideItems.length - 1) ? 0 : current + 1;
+      showSlide(current);
+      animateSlide(); // Animate the slide after each cycle
+    }, 5000); // Change slide every 5 seconds
+  </script>
+
+
+  <!-- ---------------------------------------------------COUNTERS------------------------------------------------------------------- -->
+
+  <div class="stats">
+    <!-- Total Students -->
+    <div class="stat-box">
+      <i class="fa fa-users"></i>
+      <p class="p1">Total Students</p>
+      <h2 class="counter" data-target="2500">0</h2>
+    </div>
+
+    <!-- Courses Offered -->
+    <div class="stat-box">
+      <i class="fa fa-book"></i>
+      <p class="p1">Courses Offered</p>
+      <h2 class="counter" data-target="70">0</h2>
+    </div>
+
+    <!-- Faculty Members -->
+    <div class="stat-box">
+      <i class="fa fa-chalkboard-teacher"></i>
+      <p class="p1">Faculty Members</p>
+      <h2 class="counter" data-target="150">0</h2>
+    </div>
+
+    <!-- Active Departments -->
+    <div class="stat-box">
+      <i class="fa fa-building"></i>
+      <p class="p1">Active Departments</p>
+      <h2 class="counter" data-target="12">0</h2>
+    </div>
+
+    <div class="stat-box">
+      <i class="fa fa-briefcase"></i>
+      <p class="p1">Companies Visited</p>
+      <h2 class="counter" data-target="115">0</h2>
+    </div>
+  </div>
+
+  <script>
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = target / 200;
+
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(updateCount, 50);
+        } else {
+          counter.innerText = target + "+";
+        }
+      };
+
+      updateCount();
+    });
+  </script>
+
+
+
+
+  <!-- -----------------------------------------------------------------UG & PG ---------------------------------------------------------- -->
+  <!-- <hr> -->
+  <h2 id="ug">UG Programs (B.Tech)</h2>
+
+  <div class="program-container">
+
+    <div class="program">
+      <i class="fas fa-laptop-code"></i>
+      <div class="program-title"><a href="cse.html">Computer Science and Engineering</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-brain"></i>
+      <div class="program-title"><a href="aiml.html">Artificial Intelligence and Machine Learning</a></div>
+      <div class="program-subtitle">(CSE)</div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-database"></i>
+      <div class="program-title"><a href="aids.html">Artificial Intelligence and Data Science</a></div>
+      <div class="program-subtitle">(CSE)</div>
+    </div>
+
+
+    <div class="program">
+      <i class="fas fa-chart-pie"></i>
+      <div class="program-title"><a href="it.html">Information Technology</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-microchip"></i>
+      <div class="program-title"><a href="ece.html">Electronics and Communication Engineering</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-bolt"></i>
+      <div class="program-title"><a href="eee.html">Electrical and Electronics Engineering</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-cogs"></i>
+      <div class="program-title"><a href="mec.html"></a>Mechanical Engineering</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-drafting-compass"></i>
+      <div class="program-title"><a href="civil.html">Civil Engineering</a></div>
+    </div>
+  </div>
+  <h2 id="ug">PG Programs (M.Tech)</h2>
+
+  <div class="program-container">
+
+    <div class="program">
+      <i class="fas fa-laptop-code"></i>
+      <div class="program-title"><a href="cse.html">Computer Science and Engineering</a></div>
+    </div>
+    <div class="program">
+      <i class="fas fa-chart-pie"></i>
+      <div class="program-title"><a href="it.html">Information Technology</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-microchip"></i>
+      <div class="program-title"><a href="ece.html">Electronics and Communication Engineering</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-bolt"></i>
+      <div class="program-title"><a href="eee.html">Electrical and Electronics Engineering</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-cogs"></i>
+      <div class="program-title"><a href="mec.html"></a>Mechanical Engineering</a></div>
+    </div>
+
+    <div class="program">
+      <i class="fas fa-drafting-compass"></i>
+      <div class="program-title"><a href="civil.html">Civil Engineering</a></div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- -----------------------------------------------------------------COMPANIES----------------------------------------------------- -->
+
+  <h2 id="c1">Innovative Collaborations with Top Tech Companies</h2>
+
+  <!-- Top Carousel (Left to Right) -->
+  <div class="carousel-container">
+    <div class="carousel-track">
+      <img src="accenture.png" alt="Accenture logo" />
+      <img src="Capgemini.jpg" alt="Capgemini logo" />
+      <img src="cognizant.png" alt="Cognizant logo" />
+      <img src="HCL-Technologies.png" alt="HCL Technologies logo" />
+      <img src="infosys2.jpg" alt="Infosys logo" />
+      <img src="ibm-.webp" alt="Infosys logo" />
+
+    </div>
+  </div>
+
+  <!-- Bottom Carousel (Right to Left) -->
+  <div class="carousel-container">
+    <div class="carousel-track reverse">
+      <img src="Tech_Mahindra.png" alt="Tech Mahindra logo" />
+      <img src="tcs.jpg" alt="TCS logo" />
+      <img src="Hexaware.png" alt="Hexaware logo" />
+      <img src="Deloitte.png" alt="Deloitte logo" />
+      <img src="Virtusa.jpeg" alt="Virtusa logo" />
+      <img src="mphasis.png" alt="Tech Mahindra Logo">
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------------EXAM-CELL----AND----------PLACEMENT-CELL---------------------------- -->
+  <div class="container-2">
+    <!-- Exam Cell Card -->
+    <div class="card-2">
+      <div class="card-header exam-header">📄 EXAM CELL</div>
+      <div class="card-content">
+        <div class="scrolling-content">
+          ➤ Supplementary Examinations for March 2025 are announced for B.Tech I and II Semesters.
+          <br><br>
+          ➤ Candidates under OR, NR, RR, R05, R07, R10, R13 and R16 regulations are eligible.
+          <br><br>
+          ➤ Examination registration starts from 15th February 2025.
+          <br><br>
+          ➤ Last date to apply without late fee is 25th February 2025.
+          <br><br>
+          ➤ Practical examinations will begin from 10th March 2025.
+          <br><br>
+          ➤ Theory exams commence from 20th March 2025 onwards.
+          <br><br>
+          ➤ Hall tickets will be issued online 3 days prior to exams.
+          <br><br>
+          ➤ Notification: Special Supplementary Exams will be conducted for final year students.
+          <br><br>
+          ➤ For queries, contact examcell@pragati.ac.in
+          ➤ Semester results for R18 regulation will be released by 1st week of April 2025.
+          <br><br>
+          ➤ Revaluation and recounting applications will be open for 10 days after results declaration.
+          <br><br>
+          ➤ Students with pending backlogs from R13 & R16 batches must clear them before July 2025 for eligibility to
+          attend campus drives.
+          <br><br>
+          ➤ Lab exams must be completed prior to theory exam commencement; no rescheduling will be permitted.
+          <br><br>
+          ➤ Internal assessment marks for the current semester will be uploaded on or before 18th March 2025.
+          <br><br>
+          ➤ Any discrepancies in hall tickets should be reported to the Exam Cell immediately.
+          <br><br>
+          ➤ Final semester project viva dates will be notified after April 10th.
+          <br><br>
+          ➤ Students must maintain minimum 75% attendance to be eligible for end semester exams.
+          <br><br>
+          ➤ All exam fee payments are to be done via the official college portal.
+          <br><br>
+          ➤ Practical exam attendance sheets must be signed and submitted to the department coordinators.
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Placements Info Card -->
+    <div class="card-2">
+      <div class="card-header placements-header">🧑‍🎓 PLACEMENTS INFO</div>
+      <div class="card-content">
+        <div class="scrolling-content">
+          ➤ Infosys (3.6 – 4.45 LPA) recruited 110 students in 2025.
+          <br><br>
+          ➤ AutoDesk (40.0 LPA) selected 2 students from CSE/IT departments.
+          <br><br>
+          ➤ TCS Digital (7.0 LPA) placed 15 students from ECE and EEE.
+          <br><br>
+          ➤ Capgemini hired 60 students across all branches.
+          <br><br>
+          ➤ Accenture offered internship-to-job programs for 40 students.
+          <br><br>
+          ➤ Wipro Elite selected 25 students in 2025 with package of 3.8 LPA.
+          <br><br>
+          ➤ Cognizant placed 35 students through campus drive.
+          <br><br>
+          ➤ Amazon Web Services visited for summer internship selections.
+          <br><br>
+          ➤ Total placements till date: 312 students (2025 batch).
+          <br><br>
+          ➤ Highest Package: 40 LPA by AutoDesk | Average: 5.8 LPA
+          ➤ L&T Infotech selected 8 final year students with a package of 6.5 LPA.
+          <br><br>
+          ➤ HCL Technologies conducted virtual interviews and placed 20 students.
+          <br><br>
+          ➤ Deloitte shortlisted 12 students from the MBA and B.Tech (CSE) streams.
+          <br><br>
+          ➤ Tech Mahindra selected 14 students across various branches.
+          <br><br>
+          ➤ Infosys conducted a training session before their placement drive for shortlisted candidates.
+          <br><br>
+          ➤ Zensar Technologies is scheduled to conduct campus drive in May 2025.
+          <br><br>
+          ➤ The pre-placement training program begins in June for the 2026 batch.
+          <br><br>
+          ➤ Skill development sessions (aptitude, soft skills, coding) are held every Saturday.
+          <br><br>
+          ➤ Alumni working at Microsoft and Google will conduct guest talks next month.
+          <br><br>
+          ➤ 92% placement rate achieved for the 2025 graduating batch so far.
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------------------------------------------------------FOOTER------------------------------------------------------------- -->
+  <div class="footer-1">
+    <div class="container-1">
+      <div class="column-1">
+        <h2 id="h2">About Us</h2>
+        <p>Gopichand Engineering College is dedicated to academic excellence, innovation, and holistic student
+          development for a brighter future.</p>
+      </div>
+      <div class="column-2">
+        <h2 id="h2">Quick Links</h2>
+        <ul id="un">
+          <li class="il"><a href="index.html">Home</a></li>
+          <li class="il"><a href="abt.html">About</a></li>
+          <li class="il"><a href="Admission.html">Admissions</a></li>
+          <li class="il"><a href="Contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="column contact-1">
+        <h2 id="contact">Contact Us</h2>
+        <p>Email: <a href="mailto:tanurigopichand007@gmail.com" style="color: #00aced;">tanurigopichand007@gmail.com</a></p><br>
+        <p>Phone: <a href="tel:+123456789">+91 XXXXXXXXXX</a></p>
+      </div>
+    </div>
+
+    <!-- New social media icons section -->
+    <div class="social-icons-1">
+      <a href="https://www.facebook.com/gopichandec" target="_blank" class="social-icon facebook-1">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/gopichandec" target="_blank" class="social-icon instagram-1">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/gopichandec" target="_blank" class="social-icon linkedin-1">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a href="https://twitter.com/gopichandec" target="_blank" class="social-icon twitter-1">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.youtube.com/c/gopichandec" target="_blank" class="social-icon youtube-1">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+
+    <div class="footer-bottom-1">
+      <p>&copy; 2025 | All Rights Reserved | Gopichand Engineering College</p>
+    </div>
+  </div>
+
+
+</body>
+
+</html>

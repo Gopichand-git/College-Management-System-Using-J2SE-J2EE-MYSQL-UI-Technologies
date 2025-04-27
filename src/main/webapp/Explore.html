@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore Courses - Gopichand Engineering College</title>
+  <style>
+    body {
+      background-color: #0b0c2a;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 10px;
+      background-color: #1a1b4b;
+      color: #ffc107;
+      font-size: 35px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .main-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 80px); /* account for header height */
+      padding: 20px;
+      margin-top: -120px;
+    }
+
+    .courses-container {
+      background-color: #1a1b4b;
+      border-radius: 12px;
+      padding: 20px;
+      width: 350px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .toggle-button {
+      background: #ffc107;
+      color: #1a1b4b;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .toggle-button:hover {
+      background: #ffb300;
+    }
+
+    .course-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease;
+      margin-top: 15px;
+      background-color: #262754;
+      border-radius: 8px;
+      padding: 0 15px;
+    }
+
+    .course-list.open {
+      max-height: 300px;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .course-list.open::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .course-list.open::-webkit-scrollbar-track {
+      background: #1a1b4b;
+      border-radius: 10px;
+    }
+
+    .course-list.open::-webkit-scrollbar-thumb {
+      background: #ffc107;
+      border-radius: 10px;
+    }
+
+    .search-filter {
+      margin-bottom: 15px;
+    }
+
+    .search-filter input,
+    .search-filter select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: #1a1b4b;
+      color: #fff;
+    }
+
+    .course-item {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      transition: background-color 0.3s;
+      border-radius: 4px;
+    }
+
+    .course-item:last-child {
+      border-bottom: none;
+    }
+
+    .course-item:hover {
+      background-color: #33356b;
+    }
+
+    .category {
+      font-size: 12px;
+      color: #ffc107;
+    }
+
+    /* Responsive Mobile */
+    @media (max-width: 600px) {
+      .main-content {
+        align-items: flex-start;
+        min-height: auto;
+        padding-top: 20px;
+      }
+      .courses-container {
+        width: 90%;
+      }
+      .toggle-button {
+        display: none;
+      }
+      .course-list {
+        max-height: 300px;
+        padding: 15px;
+        overflow-y: auto;
+      }
+    }
+    a{
+        color: rgb(255, 255, 249);
+        text-decoration: none;
+    }
+    .back-button {
+      display: block;
+      text-align: center;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #0b3d91;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      width: fit-content;
+      transition: background 0.3s;
+    }
+    .back-button:hover {
+      background-color: #084c9f;
+    }
+  </style>
+     <script>
+        function toggleCourses() {
+          const list = document.getElementById('courseList');
+          list.classList.toggle('open');
+        }
+    
+        function filterCourses() {
+          const searchInput = document.getElementById('searchBar').value.toLowerCase();
+          const categoryInput = document.getElementById('categoryFilter').value;
+          const courses = document.querySelectorAll('.course-item');
+    
+          courses.forEach(course => {
+            const name = course.getAttribute('data-name').toLowerCase();
+            const category = course.getAttribute('data-category');
+    
+            const matchesSearch = name.includes(searchInput);
+            const matchesCategory = categoryInput === '' || category === categoryInput;
+    
+            course.style.display = (matchesSearch && matchesCategory) ? 'block' : 'none';
+          });
+        }
+    
+        // Auto expand on mobile
+        window.addEventListener('load', () => {
+          if (window.innerWidth <= 600) {
+            document.getElementById('courseList').classList.add('open');
+          }
+        });
+      </script>
+</head>
+<body>
+
+  <header>
+    GOPICHAND ENGINEERING COLLEGE
+  </header>
+
+  <div class="main-content">
+    <div class="courses-container">
+      <button class="toggle-button" onclick="toggleCourses()">Explore Courses</button>
+
+      <div class="course-list" id="courseList">
+        <div class="search-filter">
+          <input type="text" id="searchBar" placeholder="Search courses..." onkeyup="filterCourses()" />
+          <select id="categoryFilter" onchange="filterCourses()">
+            <option value="">All Categories</option>
+            <option value="Core">Core</option>
+            <option value="Emerging Tech">Emerging Tech</option>
+          </select>
+        </div>
+
+        <!-- Course List -->
+        <div class="course-item" data-name="Computer Science Engineering" data-category="Core">
+            <a href="cse.html">Computer Science Engineering </a><div class="category">Core</div>
+        </div>
+        <div class="course-item" data-name="Artificial Intelligence & Machine Learning" data-category="Emerging Tech">
+            <a href="aiml.html">AI and Machine Learning</a><div class="category">Emerging Tech</div>
+        </div>
+        <div class="course-item" data-name="Information Technology" data-category="Core">
+            <a href="it.html">Information Technology</a><div class="category">Core</div>
+        </div>
+        <div class="course-item" data-name="Data Science" data-category="Emerging Tech">
+            <a href="aids.html">AI and Data Science</a><div class="category">Emerging Tech</div>
+        </div>
+        <div class="course-item" data-name="Electronics & Communication Engineering" data-category="Core">
+            <a href="ece.html">Electronics and Communication Engineering (ECE)</a> <div class="category">Core</div>
+        </div>
+        <div class="course-item" data-name="Electrical & Electronics Engineering" data-category="Core">
+            <a href="eee.html">Electrical and Electronics Engineering (EEE) </a><div class="category">Core</div>
+        </div>
+        <div class="course-item" data-name="Mechanical Engineering" data-category="Core">
+            <a href="mec.html">Mechanical Engineering (MEC) </a><div class="category">Core</div>
+        </div>
+        <div class="course-item" data-name="Civil Engineering" data-category="Core">
+            <a href="civil.html">Civil Engineering (CIVIL) </a><div class="category">Core</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="back-button" href="index.html">← Back to Courses</a>
+</body>
+</html>
