@@ -1,1 +1,2 @@
 # College-Management-System-Using-J2SE-J2EE-MYSQL-UI-Technologies
+JAVA , JDBC , SERVLETS , JSP , MYSQL , HTML , CSS , JAVASCRIPT , JQUERY , BOOTSTRAP , AJAX
